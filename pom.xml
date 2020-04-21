@@ -11,6 +11,9 @@
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <!-- Set the encoding default property -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- end encoding default property -->
     </properties>
 
     <dependencies>
