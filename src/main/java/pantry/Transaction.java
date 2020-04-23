@@ -1,3 +1,4 @@
+package pantry;
 import java.time.LocalDate;
 import java.util.UUID;
 import java.util.Vector;

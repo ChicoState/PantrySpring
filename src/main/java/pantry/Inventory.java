@@ -1,3 +1,4 @@
+package pantry;
 import java.util.Hashtable;
 import java.util.Set;
 import java.util.Iterator;
