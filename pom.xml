@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.springframework</groupId>
-    <artifactId>gs-maven</artifactId>
+    <artifactId>PantrySpring</artifactId>
     <packaging>jar</packaging>
     <version>0.1.0</version>
 
@@ -14,6 +14,12 @@
         <!-- Set the encoding default property -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- end encoding default property -->
+        <!-- Execute the Scanner for Maven (sonarcloud) -->
+        <sonar.projectKey>shelleywong_PantrySpring</sonar.projectKey>
+        <sonar.organization>shelleywong</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <sonar.login>33a311c9e6a66dad713cb5645682ada21dbd9989</sonar.login>
+        <!-- end scanner for Maven -->
     </properties>
 
     <dependencies>
