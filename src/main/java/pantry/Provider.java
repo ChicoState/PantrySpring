@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.text.NumberFormat;
 import java.util.HashMap;
-import java.util.Vector;
+import java.util.ArrayList;
 
 public class Provider {
   private final UUID _uuid;
@@ -13,7 +13,7 @@ public class Provider {
   private final ProviderType _type;
 
   // List of all items being donated/sold
-  public Vector<Item> item_list = new Vector<>();
+  public ArrayList<Item> item_list = new ArrayList<>();
   // String code for each item + quantity of each item
   public HashMap<String, Double> donated_sold = new HashMap<>();
 
@@ -23,16 +23,16 @@ public class Provider {
     _uuid = UUID.randomUUID();
     _name = name;
     if(type.equals("organization")){
-      _type = ProviderType.Organization;
+      _type = ProviderType.ORGANIZATION;
     }
     else{
-      _type = ProviderType.CommunityMember;
+      _type = ProviderType.COMMUNITYMEMBER;
     }
   }
 
   // Return the UUID, name, and type of this Provider
-  public Vector<String> get_provider_info(){
-    Vector<String> provider = new Vector<>();
+  public ArrayList<String> get_provider_info(){
+    ArrayList<String> provider = new ArrayList<>();
     String type_name = _type.name();
     provider.add(_uuid.toString());
     provider.add(_name);
