@@ -8,7 +8,7 @@ Shelley Wong, Nomaan Faiyaz Shaikh, Pratiksha Kapse
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=shelleywong_PantrySpring&metric=alert_status)](https://sonarcloud.io/dashboard?id=shelleywong_PantrySpring)
 
 ## FoodPantry UML Diagram (last updated 2020-04-28)
-![UML of FoodPantry](FoodPantry-UML.png "UML class diagram of FoodPantry")
+![UML of FoodPantry](FoodPantry-UML-updated.png "UML class diagram of FoodPantry")
 
 ### Running the example
 
