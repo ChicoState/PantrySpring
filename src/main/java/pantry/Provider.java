@@ -22,20 +22,21 @@ public class Provider {
   Provider(String name, String type) {
     _uuid = UUID.randomUUID();
     _name = name;
-    if(type == "organization"){
-      _type = ProviderType.ORGANIZATION;
+    if(type.equals("organization")){
+      _type = ProviderType.Organization;
     }
     else{
-      _type = ProviderType.COMMUNITYMEMBER;
+      _type = ProviderType.CommunityMember;
     }
   }
 
   // Return the UUID, name, and type of this Provider
   public Vector<String> get_provider_info(){
     Vector<String> provider = new Vector<>();
+    String type_name = _type.name();
     provider.add(_uuid.toString());
     provider.add(_name);
-    provider.add(String.valueOf(_type));
+    provider.add(type_name);
     return provider;
   }
 
