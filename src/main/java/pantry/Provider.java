@@ -6,7 +6,7 @@ import java.time.temporal.ChronoUnit;
 import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.ArrayList;
-import java.util.Map;
+//import java.util.Map;
 
 public class Provider {
   private final UUID _uuid;
@@ -64,23 +64,24 @@ public class Provider {
   public void show_items() {
     NumberFormat formatter = NumberFormat.getCurrencyInstance();
     String type;
-    int count = 1;
 
     for(HashMap.Entry<String, ArrayList<Item>> entry:donated_sold.entrySet()) {
+      int count = 1;
+      System.out.println("Item Key " + entry.getKey() + ":");
       for(Item it : entry.getValue()) {
         type = it.plu ? "PLU":"UPC";
-        System.out.println(count + ": Item Key " + entry.getKey());
-        System.out.println("Item code: " + it.code);
-        System.out.println("Item name: " + it.name);
-        System.out.println("Item cost: " + formatter.format(it.cost));
-        System.out.println("Item PLU? " + type);
-        System.out.println("Item date received: " + it.date_received);
-        System.out.println("Item expiration date: " + it.exp_date);
+        System.out.println("\t" + count + ".");
+        System.out.println("\tItem code: " + it.code);
+        System.out.println("\tItem name: " + it.name);
+        System.out.println("\tItem cost: " + formatter.format(it.cost));
+        System.out.println("\tItem PLU? " + type);
+        System.out.println("\tItem date received: " + it.date_received);
+        System.out.println("\tItem expiration date: " + it.exp_date);
         if(it.plu){
-          System.out.println("Quantity: " + it.qty + " lbs");
+          System.out.println("\tQuantity: " + it.qty + " lbs");
         }
         else{
-          System.out.println("Quantity: " + it.qty + " units");
+          System.out.println("\tQuantity: " + it.qty + " units");
         }
         count++;
       }

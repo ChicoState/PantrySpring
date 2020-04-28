@@ -9,6 +9,7 @@ public class Client {
     System.out.println("Provider: " + provider.get_provider_info());
     provider.add_item("94011", "Bananas", 0.99, true, 14, 10.5);
     provider.add_item("3424", "Carrots", 0.75, true, 21, 5.75);
+    provider.add_item("3424", "Carrots", 0.00, true, 21, 4.25);
     provider.show_items();
 
     System.out.println("Provider2: " + provider2.get_provider_info());
