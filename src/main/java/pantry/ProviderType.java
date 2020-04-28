@@ -1,6 +1,6 @@
 package main.java.pantry;
 
 public enum ProviderType {
-    Organization,
-    CommunityMember
+    ORGANIZATION,
+    COMMUNITYMEMBER
 }
