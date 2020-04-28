@@ -6,16 +6,16 @@ import java.time.temporal.ChronoUnit;
 import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.ArrayList;
-//import java.util.Map;
 
 public class Provider {
   private final UUID _uuid;
   private final String _name;
   private final ProviderType _type;
-  private HashMap<String, ArrayList<Item>> donated_sold = new HashMap<>();
+  private final HashMap<String, ArrayList<Item>> donated_sold = new HashMap<>();
 
   // Constructor
-  // create a provider with random UUID, given name, and type (organization or community member)
+  // create a provider with random UUID, given name, and given type
+  // (organization or community member)
   Provider(String name, String type) {
     _uuid = UUID.randomUUID();
     _name = name;
@@ -37,9 +37,10 @@ public class Provider {
   }
 
   // Create an Item (code, name, cost (0 if free), PLU? (true if PLU, false if
-  // UPC), date received, and date item expires)
-  // Add the item to the item_list Vector
-  // add the item code and quantity to the donated_sold HashMap
+  // UPC), date received, date item expires, quantity of the item being
+  // provided at this time, and a generated id)
+  // If the code doesn't already exist, add it as a key to donated_sold
+  // Then add the item to the list of items with that code
   public void add_item(String code, String name, double cost, boolean plu,
     int days_until_exp, double qty){
     Item _item = new Item();
@@ -53,11 +54,8 @@ public class Provider {
     _item.id = UUID.randomUUID();
 
     //see if we already have an item list for current code (key)
-    ArrayList<Item> item_list = donated_sold.get(_item.code);
-    if(item_list == null) { //if not create one and put it in the map
-        item_list = new ArrayList<Item>();
-        donated_sold.put(_item.code, item_list);
-    }
+    ArrayList<Item> item_list = donated_sold.computeIfAbsent(_item.code, k -> new ArrayList<>());
+    //if not create one and put it in the map
     item_list.add(_item);
   }
 
