@@ -6,16 +6,13 @@ import java.time.temporal.ChronoUnit;
 import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class Provider {
   private final UUID _uuid;
   private final String _name;
   private final ProviderType _type;
-
-  // List of all items being donated/sold
-  public ArrayList<Item> item_list = new ArrayList<>();
-  // String code for each item + quantity of each item
-  public HashMap<String, Double> donated_sold = new HashMap<>();
+  private HashMap<String, ArrayList<Item>> donated_sold = new HashMap<>();
 
   // Constructor
   // create a provider with random UUID, given name, and type (organization or community member)
@@ -33,10 +30,9 @@ public class Provider {
   // Return the UUID, name, and type of this Provider
   public ArrayList<String> get_provider_info(){
     ArrayList<String> provider = new ArrayList<>();
-    String type_name = _type.name();
     provider.add(_uuid.toString());
     provider.add(_name);
-    provider.add(type_name);
+    provider.add(_type.name());
     return provider;
   }
 
@@ -53,34 +49,45 @@ public class Provider {
     _item.plu = plu;
     _item.date_received = LocalDate.now();
     _item.exp_date = _item.date_received.plus(days_until_exp, ChronoUnit.DAYS);
+    _item.qty = qty;
+    _item.id = UUID.randomUUID();
+
+    //see if we already have an item list for current code (key)
+    ArrayList<Item> item_list = donated_sold.get(_item.code);
+    if(item_list == null) { //if not create one and put it in the map
+        item_list = new ArrayList<Item>();
+        donated_sold.put(_item.code, item_list);
+    }
     item_list.add(_item);
-    donated_sold.put(_item.code, qty);
   }
 
-  // Print all of the items being donated/sold
-  public void show_items(){
+  public void show_items() {
     NumberFormat formatter = NumberFormat.getCurrencyInstance();
     String type;
-    double qty;
     int count = 1;
 
-    for(Item it : item_list) {
-      type = it.plu ? "PLU":"UPC";
-      qty = donated_sold.get(it.code);
-      System.out.println(count + ".");
-      System.out.println("Item code: " + it.code);
-      System.out.println("Item name: " + it.name);
-      System.out.println("Item cost: " + formatter.format(it.cost));
-      System.out.println("Item PLU? " + type);
-      System.out.println("Item date received: " + it.date_received);
-      System.out.println("Item expiration date: " + it.exp_date);
-      if(it.plu){
-        System.out.println("Quantity: " + qty + " lbs");
+    for(HashMap.Entry<String, ArrayList<Item>> entry:donated_sold.entrySet()) {
+      for(Item it : entry.getValue()) {
+        type = it.plu ? "PLU":"UPC";
+        System.out.println(count + ": Item Key " + entry.getKey());
+        System.out.println("Item code: " + it.code);
+        System.out.println("Item name: " + it.name);
+        System.out.println("Item cost: " + formatter.format(it.cost));
+        System.out.println("Item PLU? " + type);
+        System.out.println("Item date received: " + it.date_received);
+        System.out.println("Item expiration date: " + it.exp_date);
+        if(it.plu){
+          System.out.println("Quantity: " + it.qty + " lbs");
+        }
+        else{
+          System.out.println("Quantity: " + it.qty + " units");
+        }
+        count++;
       }
-      else{
-        System.out.println("Quantity: " + qty + " units");
-      }
-      count++;
     }
+  }
+
+  public HashMap<String, ArrayList<Item>> get_donated_sold(){
+    return donated_sold;
   }
 }
