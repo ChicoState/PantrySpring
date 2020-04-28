@@ -5,6 +5,7 @@ Shelley Wong, Nomaan Faiyaz Shaikh, Pratiksha Kapse
 
 ## Continuous Integration status
 [![Build Status](https://travis-ci.com/shelleywong/PantrySpring.svg?branch=master)](https://travis-ci.com/shelleywong/PantrySpring)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=shelleywong_PantrySpring&metric=alert_status)](https://sonarcloud.io/dashboard?id=shelleywong_PantrySpring)
 
 ## FoodPantry UML Diagram (last updated 2020-04-21)
 ![UML of FoodPantry](FoodPantry-UML.png "UML class diagram of FoodPantry")
