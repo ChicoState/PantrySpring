@@ -16,5 +16,5 @@ Use `mvn package` to compile the Java code, run any tests, and package the code 
 
 ```{bash}
 $ mvn package
-$ java -jar target/gs-maven-0.1.0.jar
+$ java -jar target/PantrySpring-0.1.0.jar
 ```
