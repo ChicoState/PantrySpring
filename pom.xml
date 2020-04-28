@@ -38,6 +38,13 @@
         <scope>test</scope>
       </dependency>
       <!-- end::junit[] -->
+      <!-- tag::guava[] -->
+      <dependency>
+        <groupId>com.google.guava</groupId>
+        <artifactId>guava</artifactId>
+        <version>21.0</version>
+      </dependency>
+      <!-- end::guava[] -->
     </dependencies>
 
     <build>
