@@ -3,6 +3,7 @@ package main.java.pantry;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 import java.text.DecimalFormat;
 
@@ -53,7 +54,7 @@ public class Transaction {
     //Change
     public void calculateCost()
     {
-        for(HashMap.Entry<String, ArrayList<Item>> itemList:itemList.entrySet())
+        for(Map.Entry<String, ArrayList<Item>> itemList:itemList.entrySet())
         {
             for(Item itm : itemList.getValue())
             {
@@ -75,7 +76,7 @@ public class Transaction {
         Inventory inv = Inventory.getInstance();
         if(transactionType.equals("Purchase"))
         {
-            for(HashMap.Entry<String, ArrayList<Item>> item_l:item_list1.entrySet()) 
+            for(Map.Entry<String, ArrayList<Item>> item_l:item_list1.entrySet())
             {
                 for(Item itm : item_l.getValue()) 
                 {

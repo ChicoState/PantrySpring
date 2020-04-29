@@ -2,7 +2,7 @@ package main.java.pantry;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
+import java.util.Map;
 
 public class Inventory {
     private static Inventory inventory = null;
@@ -45,7 +45,7 @@ public class Inventory {
     {
         System.out.println("Pantry Inventory");
         System.out.println();
-        for(HashMap.Entry<String, ArrayList<Item>> entry:stock.entrySet()) {
+        for(Map.Entry<String, ArrayList<Item>> entry:stock.entrySet()) {
             System.out.println("Item Key " + entry.getKey() + ":");
             for(Item itm : entry.getValue()) {
                 itm.displayItem();
