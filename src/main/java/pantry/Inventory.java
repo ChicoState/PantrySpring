@@ -21,12 +21,12 @@ public class Inventory {
         return inventory.get(item.getCode()) != null;
     }
     
-    public void remove_from_inventory(Item item)
+    public void removeFromInventory(Item item)
     {
         //inventory.remove(item.getCode());
     }
     
-    public void add_to_inventory(Item item)
+    public void addToInventory(Item item)
     {
         if(inventory.containsKey(item.getCode()))
         {
@@ -41,17 +41,16 @@ public class Inventory {
         }
     }
 
-    public void display_inventory()
+    public void displayInventory()
     {
         System.out.println("Pantry Inventory");
         System.out.println();
         for(HashMap.Entry<String, ArrayList<Item>> entry:inventory.entrySet()) {
             System.out.println("Item Key " + entry.getKey() + ":");
             for(Item itm : entry.getValue()) {
-                itm.display_item();
+                itm.displayItem();
             }
         }
         System.out.println();
     }
-
 }
