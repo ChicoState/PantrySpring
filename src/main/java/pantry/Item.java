@@ -18,74 +18,91 @@ public class Item {
         name = s; 
         return this;
     }
+
     public Item setUUID(UUID i)
     {
         id = i;
         return this;
     }
+
     public Item setPLU(Boolean a)
     {
         plu = a;
         return this;
     }
+
     public Item setCost(double p){ 
         cost = p;
         return this;
     }
+
     public Boolean PLU()
     {
         return plu;
     }
+
     public Item setDateReceived(LocalDate d)
     {
         date_received = d;
         return this;
     }
+
     public Item setCode(String c){ 
         code = c;
         return this;
     }
+
     public Item setExpiryDate(LocalDate d){
         exp_date = d;
         return this;
     }
+
     public Item setQty(double q){
         qty = q;
         return this;
     }
+
     public String getCode()
     {
         return code;
     }
+
     public double getQty()
     {
         return qty;
     }
+
     public UUID getUUID()
     {
         return id;
     }
+
     public String getName()
     {
         return name;
     }
+
     public double getCost()
     {
         return cost;
     }
+
     public LocalDate getExpDate()
     {
         return exp_date;
     }
+
     public LocalDate getRecDate()
     {
         return date_received;
     }
+
     public int days_until_exp()
     {
         Period period = Period.between(date_received, exp_date);
         return period.getDays();
     }
+
     public void display_item()
     {
         System.out.printf("%-15.15s  %-25.25s  %-15.15s  %-10.10s  %-10.10s  %-10.10s%n",code,name,cost,qty,date_received,exp_date);
