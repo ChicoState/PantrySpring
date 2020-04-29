@@ -14,26 +14,22 @@ public class Item {
     private UUID id;
     private LocalDate expDate;
 
-    public Item setName(String s){ 
+    public void setName(String s){
         name = s; 
-        return this;
     }
 
-    public Item setUUID(UUID i)
+    public void setUUID(UUID i)
     {
         id = i;
-        return this;
     }
 
-    public Item setPLU(Boolean a)
+    public void setPLU(Boolean a)
     {
         plu = a;
-        return this;
     }
 
-    public Item setCost(double p){ 
+    public void setCost(double p){
         cost = p;
-        return this;
     }
 
     public Boolean isPLU()
@@ -41,25 +37,21 @@ public class Item {
         return plu;
     }
 
-    public Item setDateReceived(LocalDate d)
+    public void setDateReceived(LocalDate d)
     {
         dateReceived = d;
-        return this;
     }
 
-    public Item setCode(String c){ 
+    public void setCode(String c){
         code = c;
-        return this;
     }
 
-    public Item setExpiryDate(LocalDate d){
+    public void setExpiryDate(LocalDate d){
         expDate = d;
-        return this;
     }
 
-    public Item setQty(double q){
+    public void setQty(double q){
         qty = q;
-        return this;
     }
 
     public String getCode()

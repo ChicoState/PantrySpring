@@ -19,8 +19,20 @@ public class Client {
 
     Provider provider1 = new Provider("Org1", "organization");
     System.out.println("Provider1: " + provider1.getProviderInfo());
-    Item apple1 = new Item().setCode("110022").setCost(3).setDateReceived(LocalDate.of(2020, 04, 01)).setExpiryDate(LocalDate.of(2020, 05, 01)).setName("Apple").setQty(12);
-    Item apple2 = new Item().setCode("110022").setCost(5).setDateReceived(LocalDate.of(2020,04,06)).setExpiryDate(LocalDate.of(2020,05,10)).setName("Apple").setQty(12);
+    Item apple1 = new Item();
+    apple1.setCode("110022");
+    apple1.setCost(3);
+    apple1.setDateReceived(LocalDate.of(2020, 04, 01));
+    apple1.setExpiryDate(LocalDate.of(2020, 05, 01));
+    apple1.setName("Apple");
+    apple1.setQty(12);
+    Item apple2 = new Item();
+    apple2.setCode("110022");
+    apple2.setCost(5);
+    apple2.setDateReceived(LocalDate.of(2020,04,06));
+    apple2.setExpiryDate(LocalDate.of(2020,05,10));
+    apple2.setName("Apple");
+    apple2.setQty(12);
     provider1.addItem(apple1.getCode(), apple1.getName(), apple1.getCost(), apple1.isPLU(), apple1.daysUntilExp(), apple1.getQty());
     provider1.addItem(apple2.getCode(), apple2.getName(), apple2.getCost(), apple2.isPLU(), apple2.daysUntilExp(), apple2.getQty());
     Transaction trans1 = new Transaction(provider1.getDonatedSold(), PURCHASE, provider1);
