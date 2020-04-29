@@ -8,11 +8,11 @@ public class Item {
     public String code;
     public String name;
     public double cost;
-    public boolean plu=false;
-    public LocalDate date_received;
-    public double qty=0;
+    public boolean plu = false;
+    public LocalDate dateReceived;
+    public double qty = 0;
     public UUID id;
-    LocalDate exp_date;
+    LocalDate expDate;
 
     public Item setName(String s){ 
         name = s; 
@@ -36,14 +36,14 @@ public class Item {
         return this;
     }
 
-    public Boolean PLU()
+    public Boolean isPLU()
     {
         return plu;
     }
 
     public Item setDateReceived(LocalDate d)
     {
-        date_received = d;
+        dateReceived = d;
         return this;
     }
 
@@ -53,7 +53,7 @@ public class Item {
     }
 
     public Item setExpiryDate(LocalDate d){
-        exp_date = d;
+        expDate = d;
         return this;
     }
 
@@ -89,22 +89,23 @@ public class Item {
 
     public LocalDate getExpDate()
     {
-        return exp_date;
+        return expDate;
     }
 
     public LocalDate getRecDate()
     {
-        return date_received;
+        return dateReceived;
     }
 
-    public int days_until_exp()
+    public int daysUntilExp()
     {
-        Period period = Period.between(date_received, exp_date);
+        Period period = Period.between(dateReceived, expDate);
         return period.getDays();
     }
 
-    public void display_item()
+    public void displayItem()
     {
-        System.out.printf("%-15.15s  %-25.25s  %-15.15s  %-10.10s  %-10.10s  %-10.10s%n",code,name,cost,qty,date_received,exp_date);
+        System.out.printf("%-15.15s  %-25.25s  %-15.15s  %-10.10s  %-10.10s  %-10.10s%n",
+                code, name, cost, qty, dateReceived, expDate);
     }
 }
