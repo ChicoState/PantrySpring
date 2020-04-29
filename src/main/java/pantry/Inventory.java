@@ -1,57 +1,58 @@
+package main.java.pantry;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
+import java.util.Map;
 
 public class Inventory {
-    private static Inventory inventory_single = null; 
-    private final HashMap<String, ArrayList<Item>> inventory = new HashMap<>();
+    private static Inventory inventory = null;
+    private final HashMap<String, ArrayList<Item>> stock = new HashMap<>();
+
+    protected Inventory() {}
+
     public static Inventory getInstance() 
     { 
-        if (inventory_single == null) 
-            inventory_single = new Inventory(); 
+        if (inventory == null)
+            inventory = new Inventory();
   
-        return inventory_single; 
-    } 
+        return inventory;
+    }
+
     public Boolean itemExists(Item item)
     {
-        if(inventory.get(item.getCode())==null)
-        {
-            return false;
-        }else{
-            return true;
-        }
+        return stock.get(item.getCode()) != null;
     }
-    public void remove_from_inventory(Item item)
+    
+    public void removeFromInventory(Item item)
     {
-        //inventory.remove(item.getCode());
+        //stock.remove(item.getCode());
     }
-    public void add_to_inventory(Item item)
+    
+    public void addToInventory(Item item)
     {
-        if(inventory.containsKey(item.getCode())==true)
+        if(stock.containsKey(item.getCode()))
         {
-            ArrayList<Item> its = inventory.get(item.getCode());
+            ArrayList<Item> its = stock.get(item.getCode());
             its.add(item);
-            inventory.replace(item.getCode(),its);
+            ArrayList<Item> replace = stock.replace(item.getCode(), its);
         }else
         {
             ArrayList<Item> its = new ArrayList<>();
             its.add(item);
-            inventory.put(item.getCode(),its);
+            stock.put(item.getCode(),its);
         }
     }
 
-    public void display_inventory()
+    public void displayInventory()
     {
         System.out.println("Pantry Inventory");
         System.out.println();
-        for(HashMap.Entry<String, ArrayList<Item>> entry:inventory.entrySet()) {
+        for(Map.Entry<String, ArrayList<Item>> entry:stock.entrySet()) {
             System.out.println("Item Key " + entry.getKey() + ":");
             for(Item itm : entry.getValue()) {
-                itm.display_item();
+                itm.displayItem();
             }
         }
         System.out.println();
     }
-
 }
