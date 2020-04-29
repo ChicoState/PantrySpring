@@ -8,42 +8,42 @@ import java.text.DecimalFormat;
 
 public class Transaction {
     //Transaction Number
-    private final UUID transaction_id;
+    private final UUID transactionId;
 
     //Purchase, Donation, Supply
-    private final String transaction_type;
+    private final String transactionType;
 
     //Transaction with
     private final Provider provider;
 
     //Items in transaction
     //public Vector<Item> item_list = new Vector<Item>();
-    private HashMap<String, ArrayList<Item>> item_list = new HashMap<>();
+    private HashMap<String, ArrayList<Item>> itemList = new HashMap<>();
     // Transaction Date
     LocalDate today = LocalDate.now();
 
     // Total Cost
-    private double total_cost;
+    private double totalCost;
 
     // Constructor{ Item_list, Transaction_Type:Purchase, Donated, Sold, Provider}
     public Transaction(HashMap<String, ArrayList<Item>> list, String trans_type, Provider p) {
-        transaction_id = UUID.randomUUID();
-        item_list = list;
-        transaction_type = trans_type;
+        transactionId = UUID.randomUUID();
+        itemList = list;
+        transactionType = trans_type;
         provider = p;
 
         //Calculate the total cost of transaction
         calculateCost();
 
         //Update qty in the inventory
-        commitTransaction(item_list);
+        commitTransaction(itemList);
     }
 
     //Displays contents of the transaction and the total cost
     public void displayTransaction()
     {
         DecimalFormat df = new DecimalFormat("#.##");
-        System.out.println("Transaction: "+transaction_id);
+        System.out.println("Transaction: "+transactionId);
         provider.showItems();
         System.out.println("Total Cost: $"+ df.format(getTransactionTotal()));
     }
@@ -53,12 +53,11 @@ public class Transaction {
     //Change
     public void calculateCost()
     {
-        for(HashMap.Entry<String, ArrayList<Item>> item_l:item_list.entrySet()) 
+        for(HashMap.Entry<String, ArrayList<Item>> itemList:itemList.entrySet())
         {
-            for(Item itm : item_l.getValue()) 
+            for(Item itm : itemList.getValue())
             {
-                double itemTotal = itm.getCost() * itm.getQty();
-                total_cost =  total_cost + itemTotal;
+                totalCost =  totalCost + itm.getCost();
             }   
         }
     }
@@ -66,7 +65,7 @@ public class Transaction {
     //Return total cost
     public double getTransactionTotal()
     {
-        return total_cost;
+        return totalCost;
     }
 
     //Update inventory quantity
@@ -74,7 +73,7 @@ public class Transaction {
     public void commitTransaction(HashMap<String, ArrayList<Item>> item_list1)
     {
         Inventory inv = Inventory.getInstance();
-        if(transaction_type.equals("Purchase"))
+        if(transactionType.equals("Purchase"))
         {
             for(HashMap.Entry<String, ArrayList<Item>> item_l:item_list1.entrySet()) 
             {

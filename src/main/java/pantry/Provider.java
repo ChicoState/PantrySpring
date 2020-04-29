@@ -42,14 +42,14 @@ public class Provider {
   // If the code doesn't already exist, add it as a key to donated_sold
   // Then add the item to the list of items with that code
   public void addItem(String code, String name, double cost, boolean plu,
-    int days_until_exp, double qty){
+    int daysUntilExp, double qty){
     Item item = new Item();
     item.code = code;
     item.name = name;
     item.cost = cost;
     item.plu = plu;
     item.dateReceived = LocalDate.now();
-    item.expDate = item.dateReceived.plus(days_until_exp, ChronoUnit.DAYS);
+    item.expDate = item.dateReceived.plus(daysUntilExp, ChronoUnit.DAYS);
     item.qty = qty;
     item.id = UUID.randomUUID();
 
