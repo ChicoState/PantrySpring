@@ -5,39 +5,39 @@ import java.util.HashMap;
 
 
 public class Inventory {
-    private static Inventory inventory_single = null; 
-    private final HashMap<String, ArrayList<Item>> inventory = new HashMap<>();
+    private static Inventory inventory = null;
+    private final HashMap<String, ArrayList<Item>> stock = new HashMap<>();
 
     public static Inventory getInstance() 
     { 
-        if (inventory_single == null) 
-            inventory_single = new Inventory(); 
+        if (inventory == null)
+            inventory = new Inventory();
   
-        return inventory_single; 
+        return inventory;
     }
 
     public Boolean itemExists(Item item)
     {
-        return inventory.get(item.getCode()) != null;
+        return stock.get(item.getCode()) != null;
     }
     
     public void removeFromInventory(Item item)
     {
-        //inventory.remove(item.getCode());
+        //stock.remove(item.getCode());
     }
     
     public void addToInventory(Item item)
     {
-        if(inventory.containsKey(item.getCode()))
+        if(stock.containsKey(item.getCode()))
         {
-            ArrayList<Item> its = inventory.get(item.getCode());
+            ArrayList<Item> its = stock.get(item.getCode());
             its.add(item);
-            ArrayList<Item> replace = inventory.replace(item.getCode(), its);
+            ArrayList<Item> replace = stock.replace(item.getCode(), its);
         }else
         {
             ArrayList<Item> its = new ArrayList<>();
             its.add(item);
-            inventory.put(item.getCode(),its);
+            stock.put(item.getCode(),its);
         }
     }
 
@@ -45,7 +45,7 @@ public class Inventory {
     {
         System.out.println("Pantry Inventory");
         System.out.println();
-        for(HashMap.Entry<String, ArrayList<Item>> entry:inventory.entrySet()) {
+        for(HashMap.Entry<String, ArrayList<Item>> entry:stock.entrySet()) {
             System.out.println("Item Key " + entry.getKey() + ":");
             for(Item itm : entry.getValue()) {
                 itm.displayItem();
