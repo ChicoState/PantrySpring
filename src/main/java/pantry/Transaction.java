@@ -4,17 +4,17 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
-
+import java.text.DecimalFormat;
 
 public class Transaction {
     //Transaction Number
-    private UUID transaction_id;
+    private final UUID transaction_id;
 
     //Purchase, Donation, Supply
-    private String transaction_type;
+    private final String transaction_type;
 
     //Transaction with
-    private Provider provider;
+    private final Provider provider;
 
     //Items in transaction
     //public Vector<Item> item_list = new Vector<Item>();
@@ -33,30 +33,32 @@ public class Transaction {
         provider = p;
 
         //Calculate the total cost of transaction
-        calculate_cost();
+        calculateCost();
 
         //Update qty in the inventory
-        commit_transaction(item_list);
+        commitTransaction(item_list);
     }
 
     //Displays contents of the transaction and the total cost
-    public void display_transaction()
+    public void displayTransaction()
     {
+        DecimalFormat df = new DecimalFormat("#.##");
         System.out.println("Transaction: "+transaction_id);
-        provider.show_items();
-        System.out.println("Total Cost: "+total_cost);
+        provider.showItems();
+        System.out.println("Total Cost: $"+ df.format(getTransactionTotal()));
     }
 
     //Sums all the cost in a transaction
 
     //Change
-    public void calculate_cost()
+    public void calculateCost()
     {
         for(HashMap.Entry<String, ArrayList<Item>> item_l:item_list.entrySet()) 
         {
             for(Item itm : item_l.getValue()) 
             {
-                total_cost =  total_cost + itm.getCost();
+                double itemTotal = itm.getCost() * itm.getQty();
+                total_cost =  total_cost + itemTotal;
             }   
         }
     }
@@ -67,18 +69,18 @@ public class Transaction {
         return total_cost;
     }
 
-    //Update invectory quantity
+    //Update inventory quantity
     //Change
-    public void commit_transaction(HashMap<String, ArrayList<Item>> item_list1)
+    public void commitTransaction(HashMap<String, ArrayList<Item>> item_list1)
     {
         Inventory inv = Inventory.getInstance();
-        if(transaction_type=="Purchase")
+        if(transaction_type.equals("Purchase"))
         {
             for(HashMap.Entry<String, ArrayList<Item>> item_l:item_list1.entrySet()) 
             {
                 for(Item itm : item_l.getValue()) 
                 {
-                    inv.add_to_inventory(itm);
+                    inv.addToInventory(itm);
                 }   
             }
         }
