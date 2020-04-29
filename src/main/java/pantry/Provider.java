@@ -1,4 +1,4 @@
-
+package main.java.pantry;
 
 import java.util.UUID;
 import java.time.LocalDate;
