@@ -1,7 +1,8 @@
-package pantry;
+
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.UUID;
 
 public class Item {
     public String code;
@@ -10,9 +11,21 @@ public class Item {
     public boolean plu=false;
     public LocalDate date_received;
     public double qty=0;
+    public UUID id;
     LocalDate exp_date;
+
     public Item setName(String s){ 
         name = s; 
+        return this;
+    }
+    public Item setUUID(UUID i)
+    {
+        id = i;
+        return this;
+    }
+    public Item setPLU(Boolean a)
+    {
+        plu = a;
         return this;
     }
     public Item setCost(double p){ 
@@ -47,6 +60,10 @@ public class Item {
     public double getQty()
     {
         return qty;
+    }
+    public UUID getUUID()
+    {
+        return id;
     }
     public String getName()
     {

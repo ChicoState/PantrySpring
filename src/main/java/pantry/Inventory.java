@@ -1,12 +1,11 @@
-package pantry;
-import java.util.Hashtable;
-import java.util.Set;
-import java.util.Iterator;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class Inventory {
     private static Inventory inventory_single = null; 
-    Hashtable<String,Item> inventory = new Hashtable<String,Item>(); 
+    private final HashMap<String, ArrayList<Item>> inventory = new HashMap<>();
     public static Inventory getInstance() 
     { 
         if (inventory_single == null) 
@@ -25,20 +24,20 @@ public class Inventory {
     }
     public void remove_from_inventory(Item item)
     {
-        inventory.remove(item.getCode());
+        //inventory.remove(item.getCode());
     }
     public void add_to_inventory(Item item)
     {
         if(inventory.containsKey(item.getCode())==true)
         {
-            Item t = inventory.get(item.getCode());
-            double old_qty = t.getQty();
-            double new_qty = old_qty + item.getQty();
-            t.setQty(new_qty);
-            inventory.replace(item.getCode(), t);
+            ArrayList<Item> its = inventory.get(item.getCode());
+            its.add(item);
+            inventory.replace(item.getCode(),its);
         }else
         {
-            inventory.put(item.getCode(),item);
+            ArrayList<Item> its = new ArrayList<>();
+            its.add(item);
+            inventory.put(item.getCode(),its);
         }
     }
 
@@ -46,7 +45,12 @@ public class Inventory {
     {
         System.out.println("Pantry Inventory");
         System.out.println();
-        inventory.forEach((key,val) -> System.out.printf("%-15.15s  %-15.15s  %-15.15s%n",key,val.getName(),val.getQty()));
+        for(HashMap.Entry<String, ArrayList<Item>> entry:inventory.entrySet()) {
+            System.out.println("Item Key " + entry.getKey() + ":");
+            for(Item itm : entry.getValue()) {
+                itm.display_item();
+            }
+        }
         System.out.println();
     }
 

@@ -1,12 +1,14 @@
-package pantry;
+
+
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.UUID;
-import java.util.Vector;
 
 
 public class Transaction {
     //Transaction Number
-    private String transaction_id;
+    private UUID transaction_id;
 
     //Purchase, Donation, Supply
     private String transaction_type;
@@ -15,18 +17,17 @@ public class Transaction {
     private Provider provider;
 
     //Items in transaction
-    public Vector<Item> item_list = new Vector<Item>();
-
-    //Transaction Date
+    //public Vector<Item> item_list = new Vector<Item>();
+    private HashMap<String, ArrayList<Item>> item_list = new HashMap<>();
+    // Transaction Date
     LocalDate today = LocalDate.now();
 
-    //Total Cost
+    // Total Cost
     private double total_cost;
 
-    //Constructor{ Item_list, Transaction_Type:Purchase, Donated, Sold, Provider}
-    public Transaction(Vector<Item> list, String trans_type, Provider p)
-    {
-        transaction_id = UUID.randomUUID().toString();
+    // Constructor{ Item_list, Transaction_Type:Purchase, Donated, Sold, Provider}
+    public Transaction(HashMap<String, ArrayList<Item>> list, String trans_type, Provider p) {
+        transaction_id = UUID.randomUUID();
         item_list = list;
         transaction_type = trans_type;
         provider = p;
@@ -41,17 +42,22 @@ public class Transaction {
     //Displays contents of the transaction and the total cost
     public void display_transaction()
     {
+        System.out.println("Transaction: "+transaction_id);
         provider.show_items();
         System.out.println("Total Cost: "+total_cost);
     }
 
     //Sums all the cost in a transaction
+
+    //Change
     public void calculate_cost()
     {
-        for(int x=0;x<item_list.size();x++)
-        {   
-            //System.out.println(item_list.get(x).getCost());
-            total_cost = total_cost + item_list.get(x).getCost();
+        for(HashMap.Entry<String, ArrayList<Item>> item_l:item_list.entrySet()) 
+        {
+            for(Item itm : item_l.getValue()) 
+            {
+                total_cost =  total_cost + itm.getCost();
+            }   
         }
     }
 
@@ -62,16 +68,19 @@ public class Transaction {
     }
 
     //Update invectory quantity
-    public void commit_transaction(Vector<Item> item_list)
+    //Change
+    public void commit_transaction(HashMap<String, ArrayList<Item>> item_list1)
     {
         Inventory inv = Inventory.getInstance();
         if(transaction_type=="Purchase")
         {
-            for(int x=0;x<item_list.size();x++)
-            {   
-                inv.add_to_inventory(item_list.get(x));
+            for(HashMap.Entry<String, ArrayList<Item>> item_l:item_list1.entrySet()) 
+            {
+                for(Item itm : item_l.getValue()) 
+                {
+                    inv.add_to_inventory(itm);
+                }   
             }
         }
     }
-
 }
