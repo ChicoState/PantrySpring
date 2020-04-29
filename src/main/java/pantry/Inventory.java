@@ -8,6 +8,8 @@ public class Inventory {
     private static Inventory inventory = null;
     private final HashMap<String, ArrayList<Item>> stock = new HashMap<>();
 
+    protected Inventory() {}
+
     public static Inventory getInstance() 
     { 
         if (inventory == null)
