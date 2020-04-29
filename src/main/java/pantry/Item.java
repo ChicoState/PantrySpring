@@ -5,14 +5,14 @@ import java.time.Period;
 import java.util.UUID;
 
 public class Item {
-    public String code;
-    public String name;
-    public double cost;
-    public boolean plu = false;
-    public LocalDate dateReceived;
-    public double qty = 0;
-    public UUID id;
-    LocalDate expDate;
+    private String code;
+    private String name;
+    private double cost;
+    private boolean plu = false;
+    private LocalDate dateReceived;
+    private double qty = 0;
+    private UUID id;
+    private LocalDate expDate;
 
     public Item setName(String s){ 
         name = s; 

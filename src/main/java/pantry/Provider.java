@@ -5,7 +5,9 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.text.NumberFormat;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Provider {
   private final UUID uuid;
@@ -28,7 +30,7 @@ public class Provider {
   }
 
   // Return the UUID, name, and type of this Provider
-  public ArrayList<String> getProviderInfo(){
+  public List<String> getProviderInfo(){
     ArrayList<String> provider = new ArrayList<>();
     provider.add(this.uuid.toString());
     provider.add(this.name);
@@ -44,18 +46,18 @@ public class Provider {
   public void addItem(String code, String name, double cost, boolean plu,
     int daysUntilExp, double qty){
     Item item = new Item();
-    item.code = code;
-    item.name = name;
-    item.cost = cost;
-    item.plu = plu;
-    item.dateReceived = LocalDate.now();
-    item.expDate = item.dateReceived.plus(daysUntilExp, ChronoUnit.DAYS);
-    item.qty = qty;
-    item.id = UUID.randomUUID();
+    item.setCode(code);
+    item.setName(name);
+    item.setCost(cost);
+    item.setPLU(plu);
+    item.setDateReceived(LocalDate.now());
+    item.setExpiryDate(LocalDate.now().plus(daysUntilExp, ChronoUnit.DAYS));
+    item.setQty(qty);
+    item.setUUID(UUID.randomUUID());
 
     //see if we already have an item list for current code (key)
     //if not create one and put it in the map
-    ArrayList<Item> itemList = donatedSold.computeIfAbsent(item.code, k -> new ArrayList<>());
+    ArrayList<Item> itemList = donatedSold.computeIfAbsent(code, k -> new ArrayList<>());
     itemList.add(item);
   }
 
@@ -63,23 +65,23 @@ public class Provider {
     NumberFormat formatter = NumberFormat.getCurrencyInstance();
     String type;
 
-    for(HashMap.Entry<String, ArrayList<Item>> entry:donatedSold.entrySet()) {
+    for(Map.Entry<String, ArrayList<Item>> entry:donatedSold.entrySet()) {
       System.out.println("Item Key " + entry.getKey() + ":");
       int count = 1;
       for(Item it : entry.getValue()) {
-        type = it.plu ? "PLU":"UPC";
+        type = it.isPLU() ? "PLU":"UPC";
         System.out.println("\t" + count + ".");
-        System.out.println("\tItem code: " + it.code);
-        System.out.println("\tItem name: " + it.name);
-        System.out.println("\tItem cost: " + formatter.format(it.cost));
+        System.out.println("\tItem code: " + it.getCode());
+        System.out.println("\tItem name: " + it.getName());
+        System.out.println("\tItem cost: " + formatter.format(it.getCost()));
         System.out.println("\tItem PLU? " + type);
-        System.out.println("\tItem date received: " + it.dateReceived);
-        System.out.println("\tItem expiration date: " + it.expDate);
-        if(it.plu){
-          System.out.println("\tQuantity: " + it.qty + " lbs");
+        System.out.println("\tItem date received: " + it.getRecDate());
+        System.out.println("\tItem expiration date: " + it.getExpDate());
+        if(it.isPLU()){
+          System.out.println("\tQuantity: " + it.getQty() + " lbs");
         }
         else{
-          System.out.println("\tQuantity: " + it.qty + " units");
+          System.out.println("\tQuantity: " + it.getQty() + " units");
         }
         count++;
       }
