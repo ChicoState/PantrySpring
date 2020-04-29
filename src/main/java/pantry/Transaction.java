@@ -27,10 +27,10 @@ public class Transaction {
     private double totalCost;
 
     // Constructor{ Item_list, Transaction_Type:Purchase, Donated, Sold, Provider}
-    public Transaction(HashMap<String, ArrayList<Item>> list, String trans_type, Provider p) {
+    public Transaction(HashMap<String, ArrayList<Item>> list, String transType, Provider p) {
         transactionId = UUID.randomUUID();
         itemList = list;
-        transactionType = trans_type;
+        transactionType = transType;
         provider = p;
 
         //Calculate the total cost of transaction
@@ -54,9 +54,9 @@ public class Transaction {
     //Change
     public void calculateCost()
     {
-        for(Map.Entry<String, ArrayList<Item>> itemList:itemList.entrySet())
+        for(Map.Entry<String, ArrayList<Item>> itemL:itemList.entrySet())
         {
-            for(Item itm : itemList.getValue())
+            for(Item itm : itemL.getValue())
             {
                 totalCost =  totalCost + itm.getCost();
             }   
@@ -71,14 +71,14 @@ public class Transaction {
 
     //Update inventory quantity
     //Change
-    public void commitTransaction(HashMap<String, ArrayList<Item>> item_list1)
+    public void commitTransaction(HashMap<String, ArrayList<Item>> itemList1)
     {
         Inventory inv = Inventory.getInstance();
         if(transactionType.equals("Purchase"))
         {
-            for(Map.Entry<String, ArrayList<Item>> item_l:item_list1.entrySet())
+            for(Map.Entry<String, ArrayList<Item>> itemL:itemList1.entrySet())
             {
-                for(Item itm : item_l.getValue()) 
+                for(Item itm : itemL.getValue())
                 {
                     inv.addToInventory(itm);
                 }   
