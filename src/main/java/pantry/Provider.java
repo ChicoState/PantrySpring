@@ -63,21 +63,27 @@ public class Provider {
 
   public void showItems() {
     NumberFormat formatter = NumberFormat.getCurrencyInstance();
-    String type;
 
     for(Map.Entry<String, ArrayList<Item>> entry:donatedSold.entrySet()) {
       System.out.println("Item Key " + entry.getKey() + ":");
       int count = 1;
       for(Item it : entry.getValue()) {
-        type = it.isPLU() ? "PLU":"UPC";
+        String curType;
+        boolean plu = Boolean.TRUE.equals(it.isPLU());
+        if(plu){
+          curType = "PLU";
+        }
+        else{
+          curType = "UPC";
+        }
         System.out.println("\t" + count + ".");
         System.out.println("\tItem code: " + it.getCode());
         System.out.println("\tItem name: " + it.getName());
         System.out.println("\tItem cost: " + formatter.format(it.getCost()));
-        System.out.println("\tItem PLU? " + type);
+        System.out.println("\tItem PLU? " + curType);
         System.out.println("\tItem date received: " + it.getRecDate());
         System.out.println("\tItem expiration date: " + it.getExpDate());
-        if(it.isPLU()){
+        if(plu){
           System.out.println("\tQuantity: " + it.getQty() + " lbs");
         }
         else{
