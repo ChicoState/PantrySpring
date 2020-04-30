@@ -18,7 +18,7 @@ public class Provider {
   // Constructor
   // create a provider with random UUID, given name, and given type
   // (organization or community member)
-  Provider(String name, String type) {
+  public Provider(String name, String type) {
     uuid = UUID.randomUUID();
     this.name = name;
     if(type.equals("organization")){
