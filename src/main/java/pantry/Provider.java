@@ -62,10 +62,9 @@ public class Provider {
   }
 
   public void showItems() {
+    // Set format for cost as $#.##
     NumberFormat formatter = NumberFormat.getCurrencyInstance();
-
     for(Map.Entry<String, ArrayList<Item>> entry:donatedSold.entrySet()) {
-      System.out.println("Item Key " + entry.getKey() + ":");
       int count = 1;
       for(Item it : entry.getValue()) {
         boolean plu = isItemPlu(it.isPLU());
