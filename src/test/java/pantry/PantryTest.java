@@ -7,16 +7,15 @@ import main.java.pantry.*;
 import org.junit.Test;
 
 import java.time.LocalDate;
-import java.time.Period;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class PantryTest {
 
-  private final Item milk = new Item();
   private final Provider p = new Provider("Anonymous", "community member");
   private final Provider p2 = new Provider("Anonymous", "organization");
+  private final Item milk = new Item();
 
   @Test
   public void itemNameCreated() {
@@ -107,8 +106,23 @@ public class PantryTest {
   }
 
   @Test
-  public void checkItemCodeType() {
+  public void checkItemCodeUPC() {
     assertEquals("UPC", p.getType(milk.isPLU()));
+  }
+
+  @Test
+  public void checkItemCodePLU() {
+    p2.addItem("94011", "Bananas", 0.99, true, 14, 10.5);
+    HashMap<String, ArrayList<Item>> oneItem = p2.getDonatedSold();
+    ArrayList<Item> list1 = oneItem.get("94011");
+    Item banana = list1.get(0);
+    assertEquals("PLU", p2.getType(banana.isPLU()));
+  }
+
+  @Test
+  public void checkInitialInventory() {
+    Inventory inventory = Inventory.getInstance();
+    assertNotNull(inventory);
   }
 
 }
