@@ -3,6 +3,7 @@ package main.java.pantry;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.UUID;
+import java.time.temporal.ChronoUnit;
 
 public class Item {
     private String code;
@@ -91,8 +92,8 @@ public class Item {
 
     public int daysUntilExp()
     {
-        Period period = Period.between(dateReceived, expDate);
-        return period.getDays();
+        long period = ChronoUnit.DAYS.between(dateReceived, expDate);
+        return (int)period;
     }
 
     public void displayItem()
