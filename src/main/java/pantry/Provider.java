@@ -68,14 +68,8 @@ public class Provider {
       System.out.println("Item Key " + entry.getKey() + ":");
       int count = 1;
       for(Item it : entry.getValue()) {
-        String curType;
-        boolean plu = Boolean.TRUE.equals(it.isPLU());
-        if(plu){
-          curType = "PLU";
-        }
-        else{
-          curType = "UPC";
-        }
+        boolean plu = isItemPlu(it.isPLU());
+        String curType = getType(plu);
         System.out.println("\t" + count + ".");
         System.out.println("\tItem code: " + it.getCode());
         System.out.println("\tItem name: " + it.getName());
@@ -91,6 +85,19 @@ public class Provider {
         }
         count++;
       }
+    }
+  }
+
+  public boolean isItemPlu(boolean itemType){
+    return Boolean.TRUE.equals(itemType);
+  }
+
+  public String getType(boolean plu){
+    if(plu){
+      return "PLU";
+    }
+    else{
+      return "UPC";
     }
   }
 
