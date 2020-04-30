@@ -7,10 +7,10 @@ import main.java.pantry.*;
 import org.junit.Test;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class PantryTest {
 
@@ -48,6 +48,13 @@ public class PantryTest {
     LocalDate expectedDate = LocalDate.of(2020,5,1);
     milk.setExpiryDate(LocalDate.of(2020, 05, 01));
     assertEquals(expectedDate, milk.getExpDate());
+  }
+
+  @Test
+  public void checkDateUntilExp() {
+    milk.setDateReceived(LocalDate.of(2020, 04, 01));
+    milk.setExpiryDate(LocalDate.of(2020, 05, 01));
+    assertEquals(30, milk.daysUntilExp());
   }
 
   @Test
@@ -92,6 +99,16 @@ public class PantryTest {
     HashMap<String, ArrayList<Item>> oneItem = p2.getDonatedSold();
     ArrayList<Item> list1 = oneItem.get("94011");
     assertTrue(list1.get(0).getName() == "Bananas");
+  }
+
+  @Test
+  public void checkItemIsPlu() {
+    assertFalse(p.isItemPlu(milk.isPLU()));
+  }
+
+  @Test
+  public void checkItemCodeType() {
+    assertEquals("UPC", p.getType(milk.isPLU()));
   }
 
 }
