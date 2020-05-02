@@ -19,9 +19,9 @@ public class Inventory {
 		return inventory;
 	}
 
-	public Boolean itemExists(Item item)
+	public Boolean itemExists(String code)
 	{
-		return stock.get(item.getCode()) != null;
+		return stock.get(code) != null;
 	}
 
 	public void removeFromInventory(String code)
