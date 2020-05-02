@@ -1,4 +1,4 @@
-package pantry;
+package main.java.pantry;
 
 import java.text.NumberFormat;
 import java.time.LocalDate;

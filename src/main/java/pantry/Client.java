@@ -1,4 +1,4 @@
-package pantry;
+package main.java.pantry;
 
 //package main.java.pantry;
 import java.time.LocalDate;
@@ -53,13 +53,16 @@ public class Client {
    Student student1=new Student();
    student1.addItemToCart("110022", 2);
    student1.addItemToCart("3424", 1);
+   student1.checkoutItems();
    student1.getCartInfo();
    
    student1.addItemToCart("3424", 2);
+   student1.checkoutItems();
    student1.getCartInfo();
 
    Student student2=new Student();
    student2.addItemToCart("3424",2);
+   student2.checkoutItems();
    student2.getCartInfo();
 
   }
