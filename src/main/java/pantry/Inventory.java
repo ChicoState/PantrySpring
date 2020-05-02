@@ -1,4 +1,4 @@
-package pantry;
+package main.java.pantry;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,25 +19,25 @@ public class Inventory {
 		return inventory;
 	}
 
-	public Boolean itemExists(Item item) 
+	public Boolean itemExists(Item item)
 	{
 		return stock.get(item.getCode()) != null;
 	}
 
-	public void removeFromInventory(Item item) 
+	public void removeFromInventory(String code)
 	{
-		// stock.remove(item.getCode());
+		stock.remove(code);
 	}
 
 
-	public void addToInventory(Item item) 
+	public void addToInventory(Item item)
 	{
-		if (stock.containsKey(item.getCode())) 
+		if (stock.containsKey(item.getCode()))
 		{
 			ArrayList<Item> its = stock.get(item.getCode());
 			its.add(item);
 			ArrayList<Item> replace = stock.replace(item.getCode(), its);
-		} else 
+		} else
 		{
 			ArrayList<Item> its = new ArrayList<>();
 			its.add(item);
@@ -58,19 +58,20 @@ public class Inventory {
 		}
 		System.out.println();
 	}
-	
-	
+
+
 	// reduces quantity when student puts item in the cart
 	public void reduceQuantity(String code, double quantity) {
 		for (Map.Entry<String, ArrayList<Item>> item : stock.entrySet()) {
 			if (code.equals(item.getKey())) {
-				for (Item itm : item.getValue()) {
-					itm.setQty(itm.getQty() - quantity);
-				}
+				//for (Item itm : item.getValue()) {
+				Item curItem = item.getValue().get(0);
+				curItem.setQty(curItem.getQty() - quantity);
+				//}
 			}
 		}
 	}
-	
+
 	public HashMap<String, ArrayList<Item>> getAvailableItems() {
 		return stock;
 	}

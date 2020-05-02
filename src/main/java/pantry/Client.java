@@ -1,6 +1,5 @@
 package main.java.pantry;
 
-//package main.java.pantry;
 import java.time.LocalDate;
 
 public class Client {
@@ -28,14 +27,14 @@ public class Client {
     apple1.setDateReceived(LocalDate.of(2020, 04, 01));
     apple1.setExpiryDate(LocalDate.of(2020, 05, 01));
     apple1.setName("Apple");
-    apple1.setQty(12);
+    apple1.setQty(9);
     Item apple2 = new Item();
     apple2.setCode("110022");
     apple2.setCost(5);
     apple2.setDateReceived(LocalDate.of(2020,04,06));
     apple2.setExpiryDate(LocalDate.of(2020,05,10));
     apple2.setName("Apple");
-    apple2.setQty(12);
+    apple2.setQty(15);
     provider1.addItem(apple1.getCode(), apple1.getName(), apple1.getCost(), apple1.isPLU(), apple1.daysUntilExp(), apple1.getQty());
     provider1.addItem(apple2.getCode(), apple2.getName(), apple2.getCost(), apple2.isPLU(), apple2.daysUntilExp(), apple2.getQty());
     Transaction trans1 = new Transaction(provider1.getDonatedSold(), PURCHASE, provider1);
@@ -48,22 +47,43 @@ public class Client {
     Transaction trans2 = new Transaction(provider2.getDonatedSold(), PURCHASE, provider2);
     trans2.displayTransaction();
     inventory.displayInventory();
-    
-    
-   Student student1=new Student();
-   student1.addItemToCart("110022", 2);
-   student1.addItemToCart("3424", 1);
-   student1.checkoutItems();
-   student1.getCartInfo();
-   
-   student1.addItemToCart("3424", 2);
-   student1.checkoutItems();
-   student1.getCartInfo();
 
-   Student student2=new Student();
-   student2.addItemToCart("3424",2);
-   student2.checkoutItems();
-   student2.getCartInfo();
 
+    Student student1 = new Student();
+    student1.addItemToCart("110022", 2);
+    student1.addItemToCart("3424", 1);
+    student1.getCartInfo();
+    student1.checkoutItems();
+    inventory.displayInventory();
+
+    Student student2 = new Student();
+    student2.addItemToCart("3424", 2);
+    student2.getCartInfo();
+    student2.checkoutItems();
+    inventory.displayInventory();
+
+    Student student3 = new Student();
+    student3.addItemToCart("3424", 3);
+    student3.getCartInfo();
+    student3.checkoutItems();
+    inventory.displayInventory();
+
+    Student student4 = new Student();
+    student4.addItemToCart("3424", 4.25);
+    student4.getCartInfo();
+    student4.checkoutItems();
+    inventory.displayInventory();
+
+    Student student5 = new Student();
+    student5.addItemToCart("894455000322", 5);
+    student5.getCartInfo();
+    student5.checkoutItems();
+    inventory.displayInventory();
+
+    Student student6 = new Student();
+    student6.addItemToCart("1234", 5);
+    student6.getCartInfo();
+    student6.checkoutItems();
+    inventory.displayInventory();
   }
 }
