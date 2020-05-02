@@ -61,6 +61,7 @@ public class Provider {
     itemList.add(item);
   }
 
+  // Print each of the items being donated or sold by this Provider
   public void showItems() {
     // Set format for cost as $#.##
     NumberFormat formatter = NumberFormat.getCurrencyInstance();
@@ -87,10 +88,12 @@ public class Provider {
     }
   }
 
+  // check if item is PLU with safe operation
   public boolean isItemPlu(boolean itemType){
     return Boolean.TRUE.equals(itemType);
   }
 
+  // get type (either PLU or UPC)
   public String getType(boolean plu){
     if(plu){
       return "PLU";
@@ -100,6 +103,7 @@ public class Provider {
     }
   }
 
+  // get the list of items donated
   public HashMap<String, ArrayList<Item>> getDonatedSold(){
     return donatedSold;
   }
