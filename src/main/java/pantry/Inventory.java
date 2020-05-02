@@ -64,10 +64,8 @@ public class Inventory {
 	public void reduceQuantity(String code, double quantity) {
 		for (Map.Entry<String, ArrayList<Item>> item : stock.entrySet()) {
 			if (code.equals(item.getKey())) {
-				//for (Item itm : item.getValue()) {
 				Item curItem = item.getValue().get(0);
 				curItem.setQty(curItem.getQty() - quantity);
-				//}
 			}
 		}
 	}

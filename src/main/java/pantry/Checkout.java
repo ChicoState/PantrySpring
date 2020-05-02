@@ -5,22 +5,20 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 import java.util.Map.Entry;
-import java.util.Iterator;
 
 public class Checkout {
 
 	private UUID checkoutId;
 	private LocalDateTime checkoutDate;
 	private HashMap<String, ArrayList<Item>> itemList = new HashMap<>();
-	private HashMap<String, ArrayList<Item>> checkOutList = new HashMap<>();
 	private HashMap<String, Double> cart = new HashMap<>();
 	Inventory inv = Inventory.getInstance();
 
 	Checkout() {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+		this.checkoutId = UUID.randomUUID();
 		this.checkoutDate = LocalDateTime.now();
 	}
 
@@ -28,13 +26,14 @@ public class Checkout {
 		return checkoutId;
 	}
 
-	public void setCheckoutId() {
-		this.checkoutId = UUID.randomUUID();
-	}
-
 	public void displayCheckoutInfo() {
 		System.out.println("Checkout Id -[" + checkoutId + "]");
 		System.out.println("Date of Checkout -[" + checkoutDate + "]");
+	}
+
+	// gets the checked out items from the cart
+	public void getCart(HashMap<String, Double> cart){
+		this.cart = cart;
 	}
 
 	// If item does not exist in inventory, provide appropriate message.
@@ -45,21 +44,24 @@ public class Checkout {
 	// inventory, but the quantity is less)
 	public void checkoutAll(){
 		for (Entry<String, Double> itm : cart.entrySet()) {
-			double available = checkInventory(itm.getKey());
-			if(available == 0.00){
-				System.out.println("Sorry, item is not available");
-			}
-			else if(available < itm.getValue()){
-				System.out.println("Providing amount available (not total requested)");
-				inv.removeFromInventory(itm.getKey());
-			}
-			else if(available == itm.getValue()){
-				System.out.println("We have just the right amount!");
-				inv.removeFromInventory(itm.getKey());
+			boolean available = inv.itemExists(itm.getKey());
+			if(available){
+				double amount = checkInventory(itm.getKey());
+				if(amount < itm.getValue()){
+					System.out.println("Providing amount available (not total requested)");
+					inv.removeFromInventory(itm.getKey());
+				}
+				else if(amount == itm.getValue()){
+					System.out.println("We have just the right amount!");
+					inv.removeFromInventory(itm.getKey());
+				}
+				else{
+					System.out.println("Checking out item, removing from inventory");
+					checkoutItem(itm.getKey(), itm.getValue());
+				}
 			}
 			else{
-				System.out.println("Removing from inventory");
-				checkoutItem(itm.getKey(), itm.getValue());
+				System.out.println("Sorry, item is not available");
 			}
 		}
 	}
@@ -81,6 +83,7 @@ public class Checkout {
 		return 0.00;
 	}
 
+	// Checkout the item (remove the amount of the item from inventory)
 	public void checkoutItem(String code, Double qty){
 		itemList = inv.getAvailableItems();
 		for (Entry<String, ArrayList<Item>> item : itemList.entrySet()) {
@@ -107,10 +110,4 @@ public class Checkout {
 			}
 		}
 	}
-
-	// gets the checked out items from the cart
-	public void getCart(HashMap<String, Double> cart){
-		this.cart = cart;
-	}
-
 }

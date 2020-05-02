@@ -1,36 +1,29 @@
 package main.java.pantry;
 
-import java.text.NumberFormat;
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.UUID;
-import java.util.Vector;
 
 public class Student {
 
-	Inventory inv = Inventory.getInstance();
-	Checkout co = new Checkout();
-	private final long studentId;
+	//private final long studentId;
+	private final UUID studentId;
 	ArrayList<Checkout> transactionHistory = new ArrayList<>();
-	//private HashMap<String, ArrayList<Item>> cart = new HashMap<>();
 	private HashMap<String, Double> cart = new HashMap<>();
 
 	// generates random 9 digit student id
 	Student() {
-		studentId = (long) Math.floor(Math.random() * 9_000_000_0L) + 1_000_000_0L;
+		//studentId = (long) Math.floor(Math.random() * 9_000_000_0L) + 1_000_000_0L;
+		studentId = UUID.randomUUID();
 		System.out.println("studentId :[" + studentId + "]");
 	}
 
-	public void viewAvailableItems() {
-		inv.displayInventory();
+	public UUID getStudentId(){
+		return studentId;
 	}
 
-	public ArrayList<Checkout> storeTransactionHistory() {
+	public ArrayList<Checkout> getTransactionHistory() {
 		return transactionHistory;
 	}
 
@@ -48,9 +41,10 @@ public class Student {
 
 	// Create a checkout, get student's complete cart, and checkout everything
 	public void checkoutItems(){
-		co.setCheckoutId();
+		Checkout co = new Checkout();
 		co.getCart(cart);
 		co.checkoutAll();
+		transactionHistory.add(co);
 	}
 
 	// add item with given code and qty to the student's cart
