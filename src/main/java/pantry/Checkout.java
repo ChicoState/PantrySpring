@@ -1,4 +1,4 @@
-package main.java.pantry;
+package pantry;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -17,12 +17,22 @@ public class Checkout {
 	private HashMap<String, ArrayList<Item>> checkOutList = new HashMap<>();
 	Inventory inv = Inventory.getInstance();
 
-	Checkout() {
-		checkoutId = UUID.randomUUID();
+	Checkout() { 
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 		this.checkoutDate = LocalDateTime.now();
 
 	}
+
+
+	public UUID getCheckoutId() {
+		return checkoutId;
+	}
+
+
+	public void setCheckoutId() {
+		this.checkoutId = UUID.randomUUID();
+	}
+
 
 	public void displayCheckoutInfo() {
 		System.out.println("Checkout Id -[" + checkoutId + "]");

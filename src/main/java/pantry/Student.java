@@ -1,4 +1,4 @@
-package main.java.pantry;
+package pantry;
 
 import java.text.NumberFormat;
 import java.time.LocalDate;
@@ -66,8 +66,14 @@ public class Student {
 
 		return cart;
 	}
+	
+	public void checkoutItems()
+	{
+		co.setCheckoutId();
+	}
 
 	public void addItemToCart(String code, double qty) {
+		
 		cart = co.getCart(code);
 		inv.reduceQuantity(code, qty);
 
