@@ -1,4 +1,4 @@
-package main.java.pantry;
+package pantry;
 
 import java.time.LocalDate;
 import java.time.Period;

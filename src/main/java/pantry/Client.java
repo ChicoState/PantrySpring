@@ -1,9 +1,12 @@
 package main.java.pantry;
+
+//package main.java.pantry;
 import java.time.LocalDate;
 
 public class Client {
   public static void main(String[] args) {
     final String PURCHASE = "Purchase";
+    final String SELL="Sell";
     System.out.println("Spring Food Pantry");
     Inventory inventory = Inventory.getInstance();
     inventory.displayInventory();
@@ -45,5 +48,19 @@ public class Client {
     Transaction trans2 = new Transaction(provider2.getDonatedSold(), PURCHASE, provider2);
     trans2.displayTransaction();
     inventory.displayInventory();
+    
+    
+   Student student1=new Student();
+   student1.addItemToCart("110022", 2);
+   student1.addItemToCart("3424", 1);
+   student1.getCartInfo();
+   
+   student1.addItemToCart("3424", 2);
+   student1.getCartInfo();
+
+   Student student2=new Student();
+   student2.addItemToCart("3424",2);
+   student2.getCartInfo();
+
   }
 }
