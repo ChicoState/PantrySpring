@@ -46,7 +46,7 @@ public class Checkout {
 		for (Entry<String, Double> itm : cart.entrySet()) {
 			boolean available = inv.itemExists(itm.getKey());
 			if(available){
-				double amount = checkInventory(itm.getKey());
+				double amount = getAmountInInventory(itm.getKey());
 				if(amount < itm.getValue()){
 					System.out.println("Providing amount available (not total requested)");
 					inv.removeFromInventory(itm.getKey());
@@ -69,11 +69,12 @@ public class Checkout {
 	// Check if item exists in inventory
 	// If it exists, return the total quantity of that item
 	// Otherwise, return 0.00 (amount that exists in inventory)
-	public Double checkInventory(String code){
+	public Double getAmountInInventory(String code){
 		itemList = inv.getAvailableItems();
 		for (Entry<String, ArrayList<Item>> item : itemList.entrySet()) {
 			if(code.equals(item.getKey())){
 				double sum = 0.00;
+				item.getValue().sort(new expirySorter());
 				for(Item it : item.getValue()){
 					sum += it.getQty();
 				}
