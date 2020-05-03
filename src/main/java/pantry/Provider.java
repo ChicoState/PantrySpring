@@ -39,8 +39,8 @@ public class Provider {
   // Create an Item (code, name, cost (0 if free), PLU? (true if PLU, false if
   // UPC), date received, date item expires, quantity of the item being
   // provided at this time, and a generated id)
-  // If the code doesn't already exist, add it as a key to donated_sold
-  // Then add the item to the list of items with that code
+  // 1. If the code doesn't already exist, add it as a key to donated_sold
+  // 2. Then add the item to the list of items with that code
   public void addItem(Item item){
     item.setUUID(UUID.randomUUID());
 
@@ -77,12 +77,12 @@ public class Provider {
     }
   }
 
-  // check if item is PLU with safe operation
+  // check if item is PLU or not, using safe operation
   public boolean isItemPlu(boolean itemType){
     return Boolean.TRUE.equals(itemType);
   }
 
-  // get type (either PLU or UPC)
+  // get item's type as a string (either PLU or UPC)
   public String getType(boolean plu){
     if(plu){
       return "PLU";

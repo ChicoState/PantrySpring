@@ -9,6 +9,7 @@ public class Client {
     final String SELL="Sell";
     System.out.println("Spring Food Pantry");
     Inventory inventory = Inventory.getInstance();
+    // At the start, inventory is empty
     inventory.displayInventory();
 
     // Create a set of items for testing
@@ -94,6 +95,7 @@ public class Client {
     trans2.displayTransaction();
     inventory.displayInventory();
 
+    // Test the checkout with various student scenarios
     // Multiple item checkout (items exist, in enough quantity)
     Student student1 = new Student();
     student1.addItemToCart(apple1.getCode(), 2);

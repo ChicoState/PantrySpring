@@ -36,12 +36,15 @@ public class Checkout {
 		this.cart = cart;
 	}
 
-	// If item does not exist in inventory, provide appropriate message.
-	// If quantity requested is less than amount available, student gets all
-	// available (but not the requested amount).
-	// If quantity requested equals amount available, remove item from inventory.
-	// Otherwise, remove the amount requested from inventory (item remains in
-	// inventory, but the quantity is less)
+	// 1. First check if item exists in inventory.
+	//  a) If not, let user know that item was not available.
+	// 2. If item is available, determine the total amount in inventory
+	//  a)If quantity requested is less than amount available, student gets all
+	//    available (but not the requested amount).
+	//  b) If quantity requested is the same as the amount available, remove item
+	//    from inventory.
+	//  c) Otherwise, remove the amount requested from inventory (item remains in
+	//    inventory, but the quantity has been decreased)
 	public void checkoutAll(){
 		for (Entry<String, Double> itm : cart.entrySet()) {
 			boolean available = inv.itemExists(itm.getKey());
@@ -66,15 +69,17 @@ public class Checkout {
 		}
 	}
 
-	// Check if item exists in inventory
-	// If it exists, return the total quantity of that item
-	// Otherwise, return 0.00 (amount that exists in inventory)
+	// Determine the amount of the item available in inventory
+	// 1. Before determining the total quantity of the item, we sort the item
+	//   list by expiry date.
+	// 2. a) If the item is available, return the total quantity of that item
+	//    b) Otherwise, return 0.00 (amount that exists in inventory)
 	public Double getAmountInInventory(String code){
 		itemList = inv.getAvailableItems();
 		for (Entry<String, ArrayList<Item>> item : itemList.entrySet()) {
 			if(code.equals(item.getKey())){
-				double sum = 0.00;
 				item.getValue().sort(new expirySorter());
+				double sum = 0.00;
 				for(Item it : item.getValue()){
 					sum += it.getQty();
 				}
@@ -84,24 +89,35 @@ public class Checkout {
 		return 0.00;
 	}
 
-	// Checkout the item (remove the amount of the item from inventory)
+	// At this point, we know the item is in stock, so we can checkout the item
+	// (remove the given quantity of the item from inventory)
+	// 1. Find the list of items in inventory with the same item code
+	//   (the items were sorted by exp date during getAmountInInventory method)
+	//   a) If the quantity of the item with the soonest exp date is greater than
+	//      the amount requested, reduce the qty of that item in inventory (done)
+	//   b) If the quantity of the first item equals the amount requested, the
+	//      item at that index is removed (done)
+	//   c) If the amount requested exceeds the quantity of the item with the
+	//      soonest exp date, remove the item at the current index, determine how
+	//      much additional quantity is needed, and continue going through the
+	//      list until the order has been fulfilled
 	public void checkoutItem(String code, Double qty){
 		itemList = inv.getAvailableItems();
 		for (Entry<String, ArrayList<Item>> item : itemList.entrySet()) {
 			if (code.equals(item.getKey())) {
 				int index = 0;
-				boolean cont = true;
-				while(cont){
+				boolean fulfilled = false;
+				while(!fulfilled){
 					Item curItem = item.getValue().get(index);
 					double curQty = curItem.getQty();
 					if(curQty > qty){
 						System.out.println("Reducing quantity");
 						inv.reduceQuantity(code, qty);
-						cont = false;
+						fulfilled = true;
 					}
 					else if(curQty == qty){
 						item.getValue().remove(index);
-						cont = false;
+						fulfilled = true;
 					}
 					else{
 						qty = qty - curQty;
