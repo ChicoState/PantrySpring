@@ -1,8 +1,6 @@
 package main.java.pantry;
 
 import java.util.UUID;
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.Map;
@@ -43,21 +41,12 @@ public class Provider {
   // provided at this time, and a generated id)
   // If the code doesn't already exist, add it as a key to donated_sold
   // Then add the item to the list of items with that code
-  public void addItem(String code, String name, double cost, boolean plu,
-    int daysUntilExp, double qty){
-    Item item = new Item();
-    item.setCode(code);
-    item.setName(name);
-    item.setCost(cost);
-    item.setPLU(plu);
-    item.setDateReceived(LocalDate.now());
-    item.setExpiryDate(LocalDate.now().plus(daysUntilExp, ChronoUnit.DAYS));
-    item.setQty(qty);
+  public void addItem(Item item){
     item.setUUID(UUID.randomUUID());
 
     //see if we already have an item list for current code (key)
     //if not create one and put it in the map
-    ArrayList<Item> itemList = donatedSold.computeIfAbsent(code, k -> new ArrayList<>());
+    ArrayList<Item> itemList = donatedSold.computeIfAbsent(item.getCode(), k -> new ArrayList<>());
     itemList.add(item);
   }
 
