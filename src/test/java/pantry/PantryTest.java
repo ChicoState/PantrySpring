@@ -7,6 +7,7 @@ import main.java.pantry.*;
 import org.junit.Test;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,6 +17,17 @@ public class PantryTest {
   private final Provider p = new Provider("Anonymous", "community member");
   private final Provider p2 = new Provider("Anonymous", "organization");
   private final Item milk = new Item();
+  private final Item banana = new Item();
+
+  public void createBanana(){
+    banana.setCode("94011");
+    banana.setCost(0.99);
+    banana.setPLU(true);
+    banana.setDateReceived(LocalDate.now());
+    banana.setExpiryDate(LocalDate.now().plus(14,ChronoUnit.DAYS));
+    banana.setName("Bananas");
+    banana.setQty(10.5);
+  }
 
   @Test
   public void itemNameCreated() {
@@ -87,14 +99,16 @@ public class PantryTest {
 
   @Test
   public void checkProviderAddItem() {
-    p2.addItem("94011", "Bananas", 0.99, true, 14, 10.5);
+    createBanana();
+    p2.addItem(banana);
     HashMap<String, ArrayList<Item>> oneItem = p2.getDonatedSold();
     assertTrue(oneItem.containsKey("94011") && oneItem.get("94011") != null);
   }
 
   @Test
   public void checkProviderItemList() {
-    p2.addItem("94011", "Bananas", 0.99, true, 14, 10.5);
+    createBanana();
+    p2.addItem(banana);
     HashMap<String, ArrayList<Item>> oneItem = p2.getDonatedSold();
     ArrayList<Item> list1 = oneItem.get("94011");
     assertTrue(list1.get(0).getName() == "Bananas");
@@ -112,7 +126,8 @@ public class PantryTest {
 
   @Test
   public void checkItemCodePLU() {
-    p2.addItem("94011", "Bananas", 0.99, true, 14, 10.5);
+    createBanana();
+    p2.addItem(banana);
     HashMap<String, ArrayList<Item>> oneItem = p2.getDonatedSold();
     ArrayList<Item> list1 = oneItem.get("94011");
     Item banana = list1.get(0);
