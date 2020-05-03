@@ -1,4 +1,4 @@
-
+package main.java.pantry;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -79,6 +79,15 @@ public class Transaction {
                 for(Item itm : item_l.getValue()) 
                 {
                     inv.add_to_inventory(itm);
+                }   
+            }
+        }else if(transaction_type=="Sale")
+        {
+            for(HashMap.Entry<String, ArrayList<Item>> item_l:item_list1.entrySet()) 
+            {
+                for(Item itm : item_l.getValue()) 
+                {
+                    inv.remove_from_inventory(itm);
                 }   
             }
         }

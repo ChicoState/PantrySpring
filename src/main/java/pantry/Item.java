@@ -13,6 +13,7 @@ public class Item {
     public double qty=0;
     public UUID id;
     LocalDate exp_date;
+    public int days_to_exp;
 
     public Item setName(String s){ 
         name = s; 
@@ -47,6 +48,8 @@ public class Item {
     }
     public Item setExpiryDate(LocalDate d){
         exp_date = d;
+        Period p = Period.between(date_received, exp_date);
+        days_to_exp = p.getDays();
         return this;
     }
     public Item setQty(double q){
@@ -88,6 +91,6 @@ public class Item {
     }
     public void display_item()
     {
-        System.out.printf("%-15.15s  %-25.25s  %-15.15s  %-10.10s  %-10.10s  %-10.10s%n",code,name,cost,qty,date_received,exp_date);
+        System.out.printf("%-15.15s  %-25.25s  %-15.15s  %-10.10s  %-10.10s  %-10.10s %-10.10s%n",code,name,cost,qty,date_received,exp_date,days_to_exp);
     }
 }
