@@ -76,17 +76,13 @@ public class Checkout {
 	//    b) Otherwise, return 0.00 (amount that exists in inventory)
 	public Double getAmountInInventory(String code){
 		itemList = inv.getAvailableItems();
-		for (Entry<String, ArrayList<Item>> item : itemList.entrySet()) {
-			if(code.equals(item.getKey())){
-				item.getValue().sort(new expirySorter());
-				double sum = 0.00;
-				for(Item it : item.getValue()){
-					sum += it.getQty();
-				}
-				return sum;
-			}
+		ArrayList<Item> items = itemList.get(code);
+		items.sort(new expirySorter());
+		double sum = 0.00;
+		for(Item it : items){
+			sum += it.getQty();
 		}
-		return 0.00;
+		return sum;
 	}
 
 	// At this point, we know the item is in stock, so we can checkout the item
