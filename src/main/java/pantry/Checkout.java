@@ -77,7 +77,6 @@ public class Checkout {
 	public Double getAmountInInventory(String code){
 		itemList = inv.getAvailableItems();
 		ArrayList<Item> items = itemList.get(code);
-		items.sort(new expirySorter());
 		double sum = 0.00;
 		for(Item it : items){
 			sum += it.getQty();
@@ -88,7 +87,7 @@ public class Checkout {
 	// At this point, we know the item is in stock, so we can checkout the item
 	// (remove the given quantity of the item from inventory)
 	// 1. Find the list of items in inventory with the same item code
-	//   (the items were sorted by exp date during getAmountInInventory method)
+	//   (the items get sorted by exp date)
 	//   a) If the quantity of the item with the soonest exp date is greater than
 	//      the amount requested, reduce the qty of that item in inventory (done)
 	//   b) If the quantity of the first item equals the amount requested, the
@@ -99,27 +98,25 @@ public class Checkout {
 	//      list until the order has been fulfilled
 	public void checkoutItem(String code, Double qty){
 		itemList = inv.getAvailableItems();
-		for (Entry<String, ArrayList<Item>> item : itemList.entrySet()) {
-			if (code.equals(item.getKey())) {
-				int index = 0;
-				boolean fulfilled = false;
-				while(!fulfilled){
-					Item curItem = item.getValue().get(index);
-					double curQty = curItem.getQty();
-					if(curQty > qty){
-						System.out.println("Reducing quantity");
-						inv.reduceQuantity(code, qty);
-						fulfilled = true;
-					}
-					else if(curQty == qty){
-						item.getValue().remove(index);
-						fulfilled = true;
-					}
-					else{
-						qty = qty - curQty;
-						item.getValue().remove(index); // item at index 0 is removed
-					}
-				}
+		ArrayList<Item> items = itemList.get(code);
+		items.sort(new expirySorter());
+		int index = 0;
+		boolean fulfilled = false;
+		while(!fulfilled){
+			Item curItem = items.get(index);
+			double curQty = curItem.getQty();
+			if(curQty > qty){
+				System.out.println("Reducing quantity");
+				inv.reduceQuantity(code, qty);
+				fulfilled = true;
+			}
+			else if(curQty == qty){
+				items.remove(index);
+				fulfilled = true;
+			}
+			else{
+				qty = qty - curQty;
+				items.remove(index);
 			}
 		}
 	}
