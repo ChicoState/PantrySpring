@@ -66,7 +66,15 @@ public class Client {
     ab1.setDateReceived(LocalDate.now());
     ab1.setExpiryDate(LocalDate.now().plus(180, ChronoUnit.DAYS));
     ab1.setName(ab.getName());
-    ab1.setQty(6);
+    ab1.setQty(5);
+    Item ab2 = new Item();
+    ab2.setCode(ab.getCode());
+    ab2.setCost(3.00);
+    ab2.setPLU(false);
+    ab2.setDateReceived(LocalDate.now());
+    ab2.setExpiryDate(LocalDate.now().plus(150, ChronoUnit.DAYS));
+    ab2.setName(ab.getName());
+    ab2.setQty(3);
 
     // Create a set of providers who add items to inventory
     // some items have same name and code, but different cost, dates, quantity
@@ -91,6 +99,7 @@ public class Client {
     Provider provider2 = new Provider("Annie Bidwell", "community member");
     System.out.println("Provider2: " + provider2.getProviderInfo());
     provider2.addItem(ab1);
+    provider2.addItem(ab2);
     Transaction trans2 = new Transaction(provider2.getDonatedSold(), PURCHASE, provider2);
     trans2.displayTransaction();
     inventory.displayInventory();
@@ -105,7 +114,7 @@ public class Client {
     inventory.displayInventory();
     // Checkout from inventory (subtract from same item as previous checkout)
     Student student2 = new Student();
-    student2.addItemToCart(carrots.getCode(), 2);
+    student2.addItemToCart(carrots.getCode(), 3.5);
     student2.getCartInfo();
     student2.checkoutItems();
     inventory.displayInventory();
@@ -125,7 +134,7 @@ public class Client {
     // Check that items are sorted so student receives item that expires first
     // (regardless of when the item was donated/sold to the food pantry)
     Student student5 = new Student();
-    student5.addItemToCart(ab.getCode(), 5);
+    student5.addItemToCart(ab.getCode(), 9);
     student5.getCartInfo();
     student5.checkoutItems();
     inventory.displayInventory();
