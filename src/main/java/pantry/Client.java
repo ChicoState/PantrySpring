@@ -1,35 +1,73 @@
 package main.java.pantry;
 
+//package main.java.pantry;
 import java.time.LocalDate;
 
 
 public class Client {
   public static void main(String[] args) {
-    System.out.println("5/5/2020: Nomaan");
-    Inventory inventory = new Inventory().getInstance();
+    final String PURCHASE = "Purchase";
+    final String SELL="Sell";
+    System.out.println("Spring Food Pantry");
+    Inventory inventory = Inventory.getInstance();
+    inventory.displayInventory();
 
-    Item apple2 = new Item().setCode("APPLE123").setCost(5).setDateReceived(LocalDate.of(2020,4,1)).setExpiryDate(LocalDate.of(2020,4,25)).setName("Apple").setPLU(false).setQty(12);
-    inventory.add_to_inventory(apple2);
+    Provider provider = new Provider("Hunger Fighters", "organization");
+    System.out.println("Provider: " + provider.getProviderInfo());
+    provider.addItem("94011", "Bananas", 0.99, true, 14, 10.5);
+    provider.addItem("3424", "Carrots", 0.75, true, 21, 5.75);
+    provider.addItem("3424", "Carrots", 0.00, true, 21, 4.25);
+    Transaction trans = new Transaction(provider.getDonatedSold(), PURCHASE, provider);
+    trans.displayTransaction();
+    inventory.displayInventory();
 
-    Item apple = new Item().setCode("APPLE123").setCost(5).setDateReceived(LocalDate.of(2020,4,1)).setExpiryDate(LocalDate.of(2020,4,30)).setName("Apple").setPLU(false).setQty(12);
-    inventory.add_to_inventory(apple);
-    //inventory.display_inventory();
+    Provider provider1 = new Provider("Org1", "organization");
+    System.out.println("Provider1: " + provider1.getProviderInfo());
+    Item apple1 = new Item();
+    apple1.setCode("110022");
+    apple1.setCost(3);
+    apple1.setDateReceived(LocalDate.of(2020, 04, 01));
+    apple1.setExpiryDate(LocalDate.of(2020, 05, 01));
+    apple1.setName("Apple");
+    apple1.setQty(12);
+    Item apple2 = new Item();
+    apple2.setCode("110022");
+    apple2.setCost(5);
+    apple2.setDateReceived(LocalDate.of(2020,04,06));
+    apple2.setExpiryDate(LocalDate.of(2020,05,10));
+    apple2.setName("Apple");
+    apple2.setQty(12);
+    provider1.addItem(apple1.getCode(), apple1.getName(), apple1.getCost(), apple1.isPLU(), apple1.daysUntilExp(), apple1.getQty());
+    provider1.addItem(apple2.getCode(), apple2.getName(), apple2.getCost(), apple2.isPLU(), apple2.daysUntilExp(), apple2.getQty());
+    Transaction trans1 = new Transaction(provider1.getDonatedSold(), PURCHASE, provider1);
+    trans1.displayTransaction();
+    inventory.displayInventory();
 
+    Provider provider2 = new Provider("Annie Bidwell", "community member");
+    System.out.println("Provider2: " + provider2.getProviderInfo());
+    provider2.addItem("894455000322", "Almond Butter", 0.0, false, 180, 5.0);
+    Transaction trans2 = new Transaction(provider2.getDonatedSold(), PURCHASE, provider2);
+    trans2.displayTransaction();
+    inventory.displayInventory();
+    
+    
+   Student student1=new Student();
+   student1.addItemToCart("110022", 2);
+   student1.addItemToCart("3424", 1);
+   student1.checkoutItems();
+   student1.getCartInfo();
+   
+   student1.addItemToCart("3424", 2);
+   student1.checkoutItems();
+   student1.getCartInfo();
 
+   Student student2=new Student();
+   student2.addItemToCart("3424",2);
+   student2.checkoutItems();
+   student2.getCartInfo();
 
-    Item banana = new Item().setCode("BANANAN12").setCost(5).setDateReceived(LocalDate.of(2020,4,1)).setExpiryDate(LocalDate.of(2020,4,30)).setName("Banana").setPLU(false).setQty(10);
-    inventory.add_to_inventory(banana);
-    inventory.display_inventory();
+   inventory.displayInventory();
 
-
-      Item item = new Item().setCode("APPLE123").setCost(5).setDateReceived(LocalDate.of(2020,4,1)).setExpiryDate(LocalDate.of(2020,4,30)).setName("Apple").setPLU(false).setQty(14);
-      inventory.remove_from_inventory(item);
-
-      inventory.display_inventory();
-
-
-
-
-
+   
   }
 }

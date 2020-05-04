@@ -3,60 +3,62 @@ package main.java.pantry;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
-
+import java.text.DecimalFormat;
 
 public class Transaction {
     //Transaction Number
-    private UUID transaction_id;
+    private final UUID transactionId;
 
     //Purchase, Donation, Supply
-    private String transaction_type;
+    private final String transactionType;
 
     //Transaction with
-    private Provider provider;
+    private final Provider provider;
 
     //Items in transaction
     //public Vector<Item> item_list = new Vector<Item>();
-    private HashMap<String, ArrayList<Item>> item_list = new HashMap<>();
+    private HashMap<String, ArrayList<Item>> itemList = new HashMap<>();
     // Transaction Date
     LocalDate today = LocalDate.now();
 
     // Total Cost
-    private double total_cost;
+    private double totalCost;
 
     // Constructor{ Item_list, Transaction_Type:Purchase, Donated, Sold, Provider}
-    public Transaction(HashMap<String, ArrayList<Item>> list, String trans_type, Provider p) {
-        transaction_id = UUID.randomUUID();
-        item_list = list;
-        transaction_type = trans_type;
+    public Transaction(HashMap<String, ArrayList<Item>> list, String transType, Provider p) {
+        transactionId = UUID.randomUUID();
+        itemList = list;
+        transactionType = transType;
         provider = p;
 
         //Calculate the total cost of transaction
-        calculate_cost();
+        calculateCost();
 
         //Update qty in the inventory
-        commit_transaction(item_list);
+        commitTransaction(itemList);
     }
 
     //Displays contents of the transaction and the total cost
-    public void display_transaction()
+    public void displayTransaction()
     {
-        System.out.println("Transaction: "+transaction_id);
-        provider.show_items();
-        System.out.println("Total Cost: "+total_cost);
+        DecimalFormat df = new DecimalFormat("#.##");
+        System.out.println("Transaction: "+transactionId);
+        provider.showItems();
+        System.out.println("Total Cost: $"+ df.format(getTransactionTotal()));
     }
 
     //Sums all the cost in a transaction
 
     //Change
-    public void calculate_cost()
+    public void calculateCost()
     {
-        for(HashMap.Entry<String, ArrayList<Item>> item_l:item_list.entrySet()) 
+        for(Map.Entry<String, ArrayList<Item>> itemL:itemList.entrySet())
         {
-            for(Item itm : item_l.getValue()) 
+            for(Item itm : itemL.getValue())
             {
-                total_cost =  total_cost + itm.getCost();
+                totalCost =  totalCost + itm.getCost();
             }   
         }
     }
@@ -64,30 +66,30 @@ public class Transaction {
     //Return total cost
     public double getTransactionTotal()
     {
-        return total_cost;
+        return totalCost;
     }
 
-    //Update invectory quantity
+    //Update inventory quantity
     //Change
-    public void commit_transaction(HashMap<String, ArrayList<Item>> item_list1)
+    public void commitTransaction(HashMap<String, ArrayList<Item>> itemList1)
     {
         Inventory inv = Inventory.getInstance();
-        if(transaction_type=="Purchase")
+        if(transactionType.equals("Purchase"))
         {
-            for(HashMap.Entry<String, ArrayList<Item>> item_l:item_list1.entrySet()) 
+            for(Map.Entry<String, ArrayList<Item>> itemL:itemList1.entrySet())
             {
-                for(Item itm : item_l.getValue()) 
+                for(Item itm : itemL.getValue())
                 {
-                    inv.add_to_inventory(itm);
+                    inv.addToInventory(itm);
                 }   
             }
-        }else if(transaction_type=="Sale")
+        }else if(transactionType=="Sale")
         {
-            for(HashMap.Entry<String, ArrayList<Item>> item_l:item_list1.entrySet()) 
+            for(HashMap.Entry<String, ArrayList<Item>> item_l:itemList.entrySet()) 
             {
                 for(Item itm : item_l.getValue()) 
                 {
-                    inv.remove_from_inventory(itm);
+                    inv.removeFromInventory(itm);
                 }   
             }
         }
