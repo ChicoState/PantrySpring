@@ -70,10 +70,8 @@ public class Checkout {
 	}
 
 	// Determine the amount of the item available in inventory
-	// 1. Before determining the total quantity of the item, we sort the item
-	//   list by expiry date.
-	// 2. a) If the item is available, return the total quantity of that item
-	//    b) Otherwise, return 0.00 (amount that exists in inventory)
+	// 1. If the item is available, return the total quantity of that item
+	// 2. Otherwise, return 0.00 (amount that exists in inventory)
 	public Double getAmountInInventory(String code){
 		itemList = inv.getAvailableItems();
 		ArrayList<Item> items = itemList.get(code);
@@ -87,7 +85,8 @@ public class Checkout {
 	// At this point, we know the item is in stock, so we can checkout the item
 	// (remove the given quantity of the item from inventory)
 	// 1. Find the list of items in inventory with the same item code
-	//   (the items get sorted by exp date)
+	// 2. Sort the items by exp date
+	// 3. While order is not fulfilled:
 	//   a) If the quantity of the item with the soonest exp date is greater than
 	//      the amount requested, reduce the qty of that item in inventory (done)
 	//   b) If the quantity of the first item equals the amount requested, the
