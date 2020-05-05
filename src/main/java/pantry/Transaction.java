@@ -18,8 +18,7 @@ public class Transaction {
     private final Provider provider;
 
     //Items in transaction
-    //public Vector<Item> item_list = new Vector<Item>();
-    private HashMap<String, ArrayList<Item>> itemList = new HashMap<>();
+    private HashMap<String, ArrayList<Item>> itemList;
     // Transaction Date
     LocalDate today = LocalDate.now();
 
@@ -83,7 +82,7 @@ public class Transaction {
                     inv.addToInventory(itm);
                 }   
             }
-        }else if(transactionType=="Sale")
+        }/*else if(transactionType=="Sale")
         {
             for(HashMap.Entry<String, ArrayList<Item>> item_l:itemList.entrySet()) 
             {
@@ -92,6 +91,6 @@ public class Transaction {
                     inv.removeFromInventory(itm);
                 }   
             }
-        }
+        }*/
     }
 }

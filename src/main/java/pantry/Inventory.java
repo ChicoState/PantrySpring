@@ -11,6 +11,7 @@ public class Inventory {
 	protected Inventory() {
 	}
 
+	// Inventory is a singleton (ensure there is only 1 Inventory instance)
 	public static Inventory getInstance()
 	{
 		if (inventory == null)
@@ -19,19 +20,31 @@ public class Inventory {
 		return inventory;
 	}
 
-	public Boolean itemExists(Item item) 
+	// Check if the item exists in inventory
+	public Boolean itemExists(String code)
 	{
-		return stock.get(item.getCode()) != null;
+		return stock.get(code) != null;
 	}
 
-	public void addToInventory(Item item) 
+	// Remove the item from inventory (only when completely out of the item)
+	public void removeFromInventory(String code)
 	{
-		if (stock.containsKey(item.getCode())) 
+		stock.remove(code);
+	}
+
+	// Add item to inventory
+	// 1. If item code is already in inventory, add this item to the list of
+	//    items with the same code
+	// 2. Otherwise, create a new entry for the requested code and add this item
+	//    to the new item list for this code
+	public void addToInventory(Item item)
+	{
+		if (stock.containsKey(item.getCode()))
 		{
 			ArrayList<Item> its = stock.get(item.getCode());
 			its.add(item);
 			ArrayList<Item> replace = stock.replace(item.getCode(), its);
-		} else 
+		} else
 		{
 			ArrayList<Item> its = new ArrayList<>();
 			its.add(item);
@@ -39,7 +52,7 @@ public class Inventory {
 		}
 	}
 
-
+	// Display all of the items currently in inventory
 	public void displayInventory()
 	{
 		System.out.println("Pantry Inventory");
@@ -52,19 +65,19 @@ public class Inventory {
 		}
 		System.out.println();
 	}
-	
-	
-	// reduces quantity when student puts item in the cart
+
+	// When a student puts an item in their cart (but they did not take the
+	// entire stock of the item), reduce the quantity of that item
 	public void reduceQuantity(String code, double quantity) {
 		for (Map.Entry<String, ArrayList<Item>> item : stock.entrySet()) {
 			if (code.equals(item.getKey())) {
-				for (Item itm : item.getValue()) {
-					itm.setQty(itm.getQty() - quantity);
-				}
+				Item curItem = item.getValue().get(0);
+				curItem.setQty(curItem.getQty() - quantity);
 			}
 		}
 	}
-	
+
+	// Get the available stock
 	public HashMap<String, ArrayList<Item>> getAvailableItems() {
 		return stock;
 	}
@@ -74,52 +87,6 @@ public class Inventory {
         for(Item itm1 : itm_list)
         {
             inventory_refill.addToInventory(itm1);
-        }
-    }
-	public void removeFromInventory(Item item)
-    {
-		System.out.println("****REMAINING QTY:"+item.getQty());
-        //This will show total avaialable qty of the item
-        double available=0;
-
-        //List of Item Code
-        ArrayList<Item> list = stock.get(item.getCode());
-        //Sort the list based on day of expiry ( Soonest to latest)
-        list.sort(new expiry_sorter());
-        for(Item i : list)
-        {
-            available = available + i.getQty();
-        }
-        //if available is less than the requested qty
-        if(available<item.getQty())
-        {
-            System.out.println("Quantity not available.");
-        }else
-        {
-            //Remove the item code from the hash map and refill it using inventory_refill
-            stock.remove(item.getCode());
-            double qty_closest = list.get(0).getQty();
-            //If the 1st entry in inventory has greater qty than required qty than just subtract and insert updated list in inventory
-            if(qty_closest>item.getQty())
-            {
-                list.get(0).setQty(qty_closest-item.getQty());
-				addItemList(list);
-            }
-            //If the quantity of 1st entry and required is equal, delete the item from the list and update the inventory
-            else if(qty_closest==item.getQty())
-            {
-                list.remove(0);
-                addItemList(list);
-            }
-            //If the list qty of 1st item is lesser, than delete that item from list, and update the inventory.
-            //Set the item qty and call the function again will remaining qty
-            else if(qty_closest<item.getQty())
-            {
-                list.remove(0);
-                addItemList(list);
-				item.setQty(item.getQty()-qty_closest);
-                removeFromInventory(item);
-            }
         }
     }
 }
