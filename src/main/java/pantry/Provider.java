@@ -1,8 +1,6 @@
 package main.java.pantry;
 
 import java.util.UUID;
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +16,7 @@ public class Provider {
   // Constructor
   // create a provider with random UUID, given name, and given type
   // (organization or community member)
-  Provider(String name, String type) {
+  public Provider(String name, String type) {
     uuid = UUID.randomUUID();
     this.name = name;
     if(type.equals("organization")){
@@ -41,41 +39,26 @@ public class Provider {
   // Create an Item (code, name, cost (0 if free), PLU? (true if PLU, false if
   // UPC), date received, date item expires, quantity of the item being
   // provided at this time, and a generated id)
-  // If the code doesn't already exist, add it as a key to donated_sold
-  // Then add the item to the list of items with that code
-  public void addItem(String code, String name, double cost, boolean plu,
-    int daysUntilExp, double qty){
-    Item item = new Item();
-    item.setCode(code);
-    item.setName(name);
-    item.setCost(cost);
-    item.setPLU(plu);
-    item.setDateReceived(LocalDate.now());
-    item.setExpiryDate(LocalDate.now().plus(daysUntilExp, ChronoUnit.DAYS));
-    item.setQty(qty);
+  // 1. If the code doesn't already exist, add it as a key to donated_sold
+  // 2. Then add the item to the list of items with that code
+  public void addItem(Item item){
     item.setUUID(UUID.randomUUID());
 
     //see if we already have an item list for current code (key)
     //if not create one and put it in the map
-    ArrayList<Item> itemList = donatedSold.computeIfAbsent(code, k -> new ArrayList<>());
+    ArrayList<Item> itemList = donatedSold.computeIfAbsent(item.getCode(), k -> new ArrayList<>());
     itemList.add(item);
   }
 
+  // Print each of the items being donated or sold by this Provider
   public void showItems() {
+    // Set format for cost as $#.##
     NumberFormat formatter = NumberFormat.getCurrencyInstance();
-
     for(Map.Entry<String, ArrayList<Item>> entry:donatedSold.entrySet()) {
-      System.out.println("Item Key " + entry.getKey() + ":");
       int count = 1;
       for(Item it : entry.getValue()) {
-        String curType;
-        boolean plu = Boolean.TRUE.equals(it.isPLU());
-        if(plu){
-          curType = "PLU";
-        }
-        else{
-          curType = "UPC";
-        }
+        boolean plu = isItemPlu(it.isPLU());
+        String curType = getType(plu);
         System.out.println("\t" + count + ".");
         System.out.println("\tItem code: " + it.getCode());
         System.out.println("\tItem name: " + it.getName());
@@ -94,6 +77,22 @@ public class Provider {
     }
   }
 
+  // check if item is PLU or not, using safe operation
+  public boolean isItemPlu(boolean itemType){
+    return Boolean.TRUE.equals(itemType);
+  }
+
+  // get item's type as a string (either PLU or UPC)
+  public String getType(boolean plu){
+    if(plu){
+      return "PLU";
+    }
+    else{
+      return "UPC";
+    }
+  }
+
+  // get the list of items donated
   public HashMap<String, ArrayList<Item>> getDonatedSold(){
     return donatedSold;
   }

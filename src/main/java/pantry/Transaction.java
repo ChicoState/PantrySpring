@@ -18,8 +18,7 @@ public class Transaction {
     private final Provider provider;
 
     //Items in transaction
-    //public Vector<Item> item_list = new Vector<Item>();
-    private HashMap<String, ArrayList<Item>> itemList = new HashMap<>();
+    private HashMap<String, ArrayList<Item>> itemList;
     // Transaction Date
     LocalDate today = LocalDate.now();
 
