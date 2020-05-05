@@ -81,4 +81,12 @@ public class Inventory {
 	public HashMap<String, ArrayList<Item>> getAvailableItems() {
 		return stock;
 	}
+	public void addItemList(ArrayList<Item> itm_list)
+    {
+        Inventory inventory_refill = new Inventory().getInstance();
+        for(Item itm1 : itm_list)
+        {
+            inventory_refill.addToInventory(itm1);
+        }
+    }
 }

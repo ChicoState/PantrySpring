@@ -82,6 +82,15 @@ public class Transaction {
                     inv.addToInventory(itm);
                 }   
             }
-        }
+        }/*else if(transactionType=="Sale")
+        {
+            for(HashMap.Entry<String, ArrayList<Item>> item_l:itemList.entrySet()) 
+            {
+                for(Item itm : item_l.getValue()) 
+                {
+                    inv.removeFromInventory(itm);
+                }   
+            }
+        }*/
     }
 }
