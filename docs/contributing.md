@@ -7,6 +7,7 @@ First off, this is a project built on the Spring Framework, and the guidelines f
 * [Code of Conduct](#code-of-conduct)
 * [How to Contribute](#how-to-contribute)
   * [Discuss](#discuss)
+  * [Design](#design)
   * [Create an Issue](#create-an-issue)
   * [Issue Lifecycle](#issue-lifecycle)
   * [Submit a Pull Request](#submit-a-pull-request)
@@ -23,6 +24,10 @@ By participating you are expected to uphold this code.
 #### Discuss
 
 If you have a question about the Spring Framework, check Stack Overflow using [this list of tags](https://stackoverflow.com/questions/tagged/spring+or+spring-mvc+or+spring-aop+or+spring-jdbc+or+spring-transactions+or+spring-annotations+or+spring-jms+or+spring-el+or+spring-test+or+spring+or+spring-remoting+or+spring-orm+or+spring-jmx+or+spring-cache+or+spring-webflux?tab=Newest). Find an existing discussion, or start a new one if necessary. Reading those discussions helps you to learn about the issue, and helps us to make a decision.
+
+#### Design
+
+See our [UML Diagram](FoodPantry-UML-2020-05-02.png) to understand the design of the system. To improve maintainability, we have strived to follow Java best practices and good software design pattern principles in general. The `Inventory` is a singleton to ensure there is only one instance of the inventory and that what is in stock is in fact available. The reports are set up as a `ReportFacade`, so clients have a unified interface to view all of the details provided in the report. The `Provider` class is easily extensible to different types of providers, via the use of an enumeration to determine `ProviderType`. There can be many instances of `Provider`, `Student`, and `Item`, so each of these classes is built with high cohesion and low software complexity in mind. The `Provider` is separate from the `Transactions` adding items to the inventory, and the `Student` is separate from the `Checkout` removing items from the inventory. Students and Providers do not have to worry about the details for ensuring that transactions and checkouts run smoothly (e.g. making sure an item exists before removing it), since these issues are handled in their own respective classes.
 
 #### Create an Issue
 
