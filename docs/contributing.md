@@ -42,7 +42,7 @@ When a fix is ready, the issue is closed and may still be re-opened until the fi
 
 1. Should you create an issue first? No, just create the pull request and use the description to provide context and motivation, as you would for an issue. If you want to start a discussion first or have already created an issue, once a pull request is created, we will close the issue as superseded by the pull request, and the discussion about the issue will continue under the pull request.
 
-2. Always check out the `master` branch and submit pull requests against it (for target version and configuration details, see [pom.xml](pom.xml)). Backports to prior versions will be considered on a case-by-case basis and reflected as the fix version in the issue tracker.
+2. Always check out the `master` branch and submit pull requests against it (for target version and configuration details, see [pom.xml](https://github.com/ChicoState/PantrySpring/blob/master/pom.xml)). Backports to prior versions will be considered on a case-by-case basis and reflected as the fix version in the issue tracker.
 
 3. Choose the granularity of your commits consciously and squash commits that represent multiple edits or corrections of the same logical change. See [Rewriting History section of Pro Git](https://git-scm.com/book/en/Git-Tools-Rewriting-History) for an overview of streamlining the commit history.
 
@@ -60,7 +60,7 @@ Helping to review pull requests is another great way to contribute. Your feedbac
 
 ### Build from Source
 
-See the [README](README.md) for instructions on how to check out, build, and import the Spring Pantry source code into your IDE.
+See the [README](https://github.com/ChicoState/PantrySpring/blob/master/README.md) for instructions on how to check out, build, and import the Spring Pantry source code into your IDE.
 
 ### Source Code Style
 
