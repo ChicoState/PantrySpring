@@ -9,30 +9,41 @@ import java.util.Map;
 public class Expiration {
 
 	private ArrayList<Item> ExpiredItems = new ArrayList<>();
+	private ArrayList<Item> ExpiringItems = new ArrayList<>();
 	Inventory inv = Inventory.getInstance();
 
 	// Returns Expired Items
-	public ArrayList<Item> getExpiredItems() 
-	{
-		
-		//This hashmap stores available items from the inventory
+	public ArrayList<Item> getExpiredItems() {
+
+		// This hashmap stores available items from the inventory
 		HashMap<String, ArrayList<Item>> exp = inv.getAvailableItems();
-		
-		int count=0;
-		for (Map.Entry<String, ArrayList<Item>> entry : exp.entrySet()) 
-		{
-			for (Item itm : entry.getValue()) 
-			{
-				if (itm.getExpDate().isBefore(LocalDate.now())) 
-				{	
+
+		int count = 0;
+		for (Map.Entry<String, ArrayList<Item>> entry : exp.entrySet()) {
+			for (Item itm : entry.getValue()) {
+				if (itm.getExpDate().isBefore(LocalDate.now())) {
 					ExpiredItems.add(itm);
 					count++;
 				}
 			}
-		}		
-		System.out.println("There are "+count+" Expired Items in the Inventory");
+		}
+		System.out.println("There are " + count + " Expired Items in the Inventory");
 		System.out.println();
 		return ExpiredItems;
+	}
+
+	public ArrayList<Item> getExpiringItems(int days) {
+
+		HashMap<String, ArrayList<Item>> expired = inv.getAvailableItems();
+
+		for (Map.Entry<String, ArrayList<Item>> entry : expired.entrySet()) {
+			for (Item itm : entry.getValue()) {
+				if (itm.daysUntilExp() <= days) {
+					ExpiringItems.add(itm);
+				}
+			}
+		}
+		return ExpiringItems;
 	}
 
 }
