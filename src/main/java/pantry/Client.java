@@ -145,5 +145,8 @@ public class Client {
     student6.getCartInfo();
     student6.checkoutItems();
     inventory.displayInventory();
+    
+    Report_Facade r=new Report_Facade();
+    r.getReport(40);
   }
 }
