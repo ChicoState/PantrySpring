@@ -10,10 +10,10 @@ Stores and display all the transactions in the system*/
 public class TransactionHistory {
         private static TransactionHistory transactionHistory = null;
         private final HashMap<UUID, Transaction> transactionList = new HashMap<>();
-        private double checkout_count;
-        private double checkout_weight;
-        private double purchase_count;
-        private double purchase_weight;
+        private double checkout_count = 0.0;
+        private double checkout_weight = 0.0;
+        private double purchase_count = 0.0;
+        private double purchase_weight = 0.0;
         
         
         protected TransactionHistory() {
@@ -73,7 +73,7 @@ public class TransactionHistory {
         }
         public double getCheckoutWeight()
         {
-            return checkout_count;
+            return checkout_weight;
         }
 
 }
