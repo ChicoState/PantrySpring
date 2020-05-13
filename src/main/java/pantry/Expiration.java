@@ -27,18 +27,18 @@ public class Expiration {
 				}
 			}
 		}
-		System.out.println("There are " + count + " Expired Items in the Inventory");
+		System.out.println("There are " + count + " Expired foods Items and need to be thrown out");
 		System.out.println();
 		return ExpiredItems;
 	}
 
-	public ArrayList<Item> getExpiringItems(int days) {
+	public ArrayList<Item> getExpiringItems() {
 
 		HashMap<String, ArrayList<Item>> expired = inv.getAvailableItems();
 
 		for (Map.Entry<String, ArrayList<Item>> entry : expired.entrySet()) {
 			for (Item itm : entry.getValue()) {
-				if (itm.daysUntilExp() <= days) {
+				if (itm.daysUntilExp() <= 2) {
 					ExpiringItems.add(itm);
 				}
 			}
