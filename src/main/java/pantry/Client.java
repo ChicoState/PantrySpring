@@ -176,6 +176,7 @@ public class Client {
     // Test the checkout with various student scenarios
     // Multiple item checkout (items exist, in enough quantity)
     Student student1 = new Student();
+    student1.getStudentId();
     apple1.setQty(2);
     student1.addItemToCart(apple1.getCode(), apple1);
     carrots.setQty(1);
@@ -185,6 +186,7 @@ public class Client {
     inventory.displayInventory();
     // Checkout from inventory (subtract from same item as previous checkout)
     Student student2 = new Student();
+    student2.getStudentId();
     carrots.setQty(3.5);
     student2.addItemToCart(carrots.getCode(),carrots);
     student2.getCartInfo();
@@ -192,6 +194,8 @@ public class Client {
     inventory.displayInventory();
     // Checkout quantity partly taken from 1st item in list, partly from 2nd item in list
     Student student3 = new Student();
+    student3.getStudentId();
+    student3.getStudentId();
     carrots.setQty(3);
     student3.addItemToCart(carrots.getCode(), carrots);
     student3.getCartInfo();
@@ -200,6 +204,7 @@ public class Client {
     // Total quantity not available, but student checks out what is available
     // At this point, the inventory is out of this item
     Student student4 = new Student();
+    student4.getStudentId();
     carrots.setQty(4.25);
     student4.addItemToCart(carrots.getCode(), carrots);
     student4.getCartInfo();
@@ -208,14 +213,20 @@ public class Client {
     // Check that items are sorted so student receives item that expires first
     // (regardless of when the item was donated/sold to the food pantry)
     Student student5 = new Student();
+    student5.getStudentId();
     //student5.addItemToCart(ab.getCode(), 9);
     student5.getCartInfo();
     student5.checkoutItems();
     inventory.displayInventory();
      //Student tries to checkout item that the inventory is out of
     Student student6 = new Student();
+    student6.getStudentId();
     carrots.setQty(5);
     student6.addItemToCart(carrots.getCode(), carrots);
+    student6.getCartInfo();
+    student6.checkoutItems();
+    carrots.setQty(1);
+    student6.addItemToCart(carrots.getCode(),carrots);
     student6.getCartInfo();
     student6.checkoutItems();
     inventory.displayInventory();
