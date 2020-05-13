@@ -81,7 +81,7 @@ public class Transaction {
     Add new record in TransactionHistory*/
     public void commitTransaction(HashMap<String, ArrayList<Item>> itemList1)
     {
-        TransactionHistory store = new TransactionHistory().getInstance();
+        TransactionHistory store = TransactionHistory.getInstance();
         Inventory inv = Inventory.getInstance();
         if(transactionType.equals("Purchase"))
         {
@@ -104,7 +104,7 @@ public class Transaction {
     /* Calls the display method in TransactionHistory instance*/
     public void showAll()
     {
-        TransactionHistory store = new TransactionHistory().getInstance();
+        TransactionHistory store = TransactionHistory.getInstance();
         store.display();
     }
 }

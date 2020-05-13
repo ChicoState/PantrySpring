@@ -84,8 +84,6 @@ public class Checkout {
 				System.out.println("Sorry, item is not available");
 			}
 		}
-//		System.out.println("UPC total item count: " + th.getCheckoutCount());
-//		System.out.println("PLU total item weight: " + th.getCheckoutWeight());
 	}
 
 	// Determine the amount of the item available in inventory
