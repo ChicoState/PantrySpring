@@ -59,19 +59,19 @@ public class TransactionHistory {
             checkout_weight = checkout_weight + x;
         }
 
-        public double getPurchaseCount(double x)
+        public double getPurchaseCount()
         {
             return purchase_count;
         }
-        public double getPurchaseWeight(double x)
+        public double getPurchaseWeight()
         {
             return purchase_weight;
         }
-        public double getCheckoutCount(double x)
+        public double getCheckoutCount()
         {
             return checkout_count;
         }
-        public double getCheckoutWeight(double x)
+        public double getCheckoutWeight()
         {
             return checkout_count;
         }
