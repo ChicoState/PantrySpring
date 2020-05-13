@@ -93,7 +93,7 @@ public class Transaction {
                     if(itm.isPLU()==true)
                         store.addPurchaseWeight(itm.getQty());
                     else
-                        store.addCheckoutCount(itm.getQty());
+                        store.addPurchaseCount(itm.getQty());
 
                 }   
             }
