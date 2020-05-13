@@ -3,7 +3,12 @@ package main.java.pantry;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
+/*****************Inventory**************
+ * 05/12/2020 --> Updated
+ * Singleton class to Store Items
+ * Add/Remove items 
+ * Removal of items based on earliest expiry of item code
+ ******************Inventory*************/
 public class Inventory {
 	private static Inventory inventory = null;
 	private final HashMap<String, ArrayList<Item>> stock = new HashMap<>();
@@ -20,13 +25,13 @@ public class Inventory {
 		return inventory;
 	}
 
-	// Check if the item exists in inventory
+	/*Check if the item exists in inventory*/
 	public Boolean itemExists(String code)
 	{
 		return stock.get(code) != null;
 	}
 
-	// Remove the item from inventory (only when completely out of the item)
+	/*Remove the item from inventory (only when completely out of the item)*/
 	public void removeFromInventory(String code)
 	{
 		stock.remove(code);

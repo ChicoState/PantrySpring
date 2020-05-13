@@ -7,7 +7,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 import java.util.Map.Entry;
-
+/*****************Checkout**************
+ * 05/12/2020
+ * Removes items from inventory
+ * Checkout for Student
+*****************Checkout**************/
 public class Checkout {
 
 	private UUID checkoutId;
