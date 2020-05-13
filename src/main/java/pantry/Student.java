@@ -12,21 +12,24 @@ public class Student {
 	
 	//private final long studentId;
 	private final UUID studentId;
+	private static Student student = null;
 	ArrayList<Checkout> transactionHistory = new ArrayList<>();
 	private HashMap<String, Double> cart = new HashMap<>();
+	ArrayList<UUID> studentT=new ArrayList<>();
 
 	// generates random 9 digit student id
 	Student() {
 		//studentId = (long) Math.floor(Math.random() * 9_000_000_0L) + 1_000_000_0L;
 		studentId = UUID.randomUUID();
-		System.out.println("studentId :[" + studentId + "]");
+		//System.out.println("studentId :[" + studentId + "]");
 	}
-
 	/*Returns Student ID*/
 	public UUID getStudentId(){
+		System.out.println("studentId :[" + studentId + "]");
 		return studentId;
 	}
 
+	
 	/* Returns checkout history of student */
 	public ArrayList<Checkout> getTransactionHistory() {
 		return transactionHistory;
@@ -38,7 +41,7 @@ public class Student {
 		for (Entry<String, Double> itm : cart.entrySet()) {
 			System.out.println("\t" + count + ".");
 			System.out.println("\tItem code: " + itm.getKey());
-			System.out.println("\tItem quantity: " + itm.getValue());
+			System.out.println("\tItem quantity: " + itm.getValue().getQty());
 			count++;
 		}
 		return cart;
