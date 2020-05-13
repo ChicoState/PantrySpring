@@ -20,7 +20,7 @@ public class TransactionHistory {
         }
     
         // Inventory is a singleton (ensure there is only 1 Inventory instance)
-        public TransactionHistory getInstance()
+        public static TransactionHistory getInstance()
         {
             if (transactionHistory == null)
                 transactionHistory = new TransactionHistory();
