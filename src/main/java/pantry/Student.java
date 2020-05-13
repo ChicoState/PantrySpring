@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.UUID;
-
+/*****************Student**************
+ * 05/12/2020
+ * Create a cart for Student checkout
+*****************Student**************/
 public class Student {
 	
 	//private final long studentId;
@@ -19,10 +22,12 @@ public class Student {
 		System.out.println("studentId :[" + studentId + "]");
 	}
 
+	/*Returns Student ID*/
 	public UUID getStudentId(){
 		return studentId;
 	}
 
+	/* Returns checkout history of student */
 	public ArrayList<Checkout> getTransactionHistory() {
 		return transactionHistory;
 	}
@@ -53,6 +58,7 @@ public class Student {
 		cart.put(code, itm);
 	}
 
+	/*Display complete Checkout History*/
 	public void displayCheckoutHistory()
 	{
 		for (Checkout co : transactionHistory) { 		      
