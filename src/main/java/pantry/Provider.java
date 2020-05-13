@@ -54,8 +54,8 @@ public class Provider {
   public void showItems() {
     // Set format for cost as $#.##
     NumberFormat formatter = NumberFormat.getCurrencyInstance();
+    int count = 1;
     for(Map.Entry<String, ArrayList<Item>> entry:donatedSold.entrySet()) {
-      int count = 1;
       for(Item it : entry.getValue()) {
         boolean plu = isItemPlu(it.isPLU());
         String curType = getType(plu);

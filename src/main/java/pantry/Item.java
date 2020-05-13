@@ -13,6 +13,12 @@ public class Item {
     private double qty = 0;
     private UUID id;
     private LocalDate expDate;
+    private boolean rental = false;
+
+    public void setRental(Boolean f)
+    {
+        rental = f;
+    }
 
     public void setName(String s){
         name = s; 
@@ -69,6 +75,11 @@ public class Item {
         return id;
     }
 
+    public Boolean getRental()
+    {
+        return rental;
+    }
+
     public String getName()
     {
         return name;
@@ -97,7 +108,7 @@ public class Item {
 
     public void displayItem()
     {
-        System.out.printf("%-15.15s  %-25.25s  %-15.15s  %-10.10s  %-10.10s  %-10.10s%n",
-                code, name, cost, qty, dateReceived, expDate);
+        System.out.printf("%-15.15s  %-25.25s  %-15.15s  %-10.10s  %-10.10s  %-10.10s   %-10.10s%n", 
+                code, name, cost, qty, dateReceived, expDate, rental);
     }
 }

@@ -7,6 +7,16 @@ import java.util.Map;
 import java.util.UUID;
 import java.text.DecimalFormat;
 
+/***************************TRANSACTION CLASS **************************************
+ * 05/12/2020 --->Updated
+ 
+*This class creates a Transaction Object           
+*Holds the list of items and provider information  
+*On Commit, the inventory is updated               
+*After successfull updation of inventory, the transaction is added to TransactionHistory    
+*showAll() displays the list of transaction in Transaction History 
+***************************TRANSACTION CLASS **************************************/
+
 public class Transaction {
     //Transaction Number
     private final UUID transactionId;
@@ -39,7 +49,7 @@ public class Transaction {
         commitTransaction(itemList);
     }
 
-    //Displays contents of the transaction and the total cost
+    /*Displays contents of the transaction and the total cost*/
     public void displayTransaction()
     {
         DecimalFormat df = new DecimalFormat("#.##");
@@ -48,9 +58,7 @@ public class Transaction {
         System.out.println("Total Cost: $"+ df.format(getTransactionTotal()));
     }
 
-    //Sums all the cost in a transaction
-
-    //Change
+    /*Calculate the sum of the prices in transaction*/
     public void calculateCost()
     {
         for(Map.Entry<String, ArrayList<Item>> itemL:itemList.entrySet())
@@ -62,14 +70,14 @@ public class Transaction {
         }
     }
 
-    //Return total cost
+    /*Return the total cost of transaction*/
     public double getTransactionTotal()
     {
         return totalCost;
     }
 
-    //Update inventory quantity
-    //Change
+    /*Commit the transaction and update the inventory.
+    Add new record in TransactionHistory*/
     public void commitTransaction(HashMap<String, ArrayList<Item>> itemList1)
     {
         Inventory inv = Inventory.getInstance();
@@ -82,15 +90,15 @@ public class Transaction {
                     inv.addToInventory(itm);
                 }   
             }
-        }/*else if(transactionType=="Sale")
-        {
-            for(HashMap.Entry<String, ArrayList<Item>> item_l:itemList.entrySet()) 
-            {
-                for(Item itm : item_l.getValue()) 
-                {
-                    inv.removeFromInventory(itm);
-                }   
-            }
-        }*/
+        }
+        TransactionHistory store = new TransactionHistory().getInstance();
+        store.storeTransaction(transactionId, this);
+    }
+
+    /* Calls the display method in TransactionHistory instance*/
+    public void showAll()
+    {
+        TransactionHistory store = new TransactionHistory().getInstance();
+        store.display();
     }
 }
