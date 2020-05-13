@@ -229,8 +229,7 @@ public class Client {
     student6.addItemToCart(carrots.getCode(), 5);
     student6.getCartInfo();
     student6.checkoutItems();
-    carrots.setQty(1);
-    student6.addItemToCart(carrots.getCode(),carrots);
+    student6.addItemToCart(carrots.getCode(),1);
     student6.getCartInfo();
     student6.checkoutItems();
     inventory.displayInventory();
