@@ -58,6 +58,12 @@ public class Student {
 		cart.put(code, qty);
 	}
 
+	// return rented item
+	public void returnRentedItem(String code, double qty){
+		Checkout co = new Checkout();
+		co.returnItem(code, qty);
+	}
+
 	/*Display complete Checkout History*/
 	public void displayCheckoutHistory()
 	{

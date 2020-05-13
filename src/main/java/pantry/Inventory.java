@@ -12,6 +12,7 @@ import java.util.Map;
 public class Inventory {
 	private static Inventory inventory = null;
 	private final HashMap<String, ArrayList<Item>> stock = new HashMap<>();
+	private final HashMap<String, ArrayList<Item>> rented = new HashMap<>();
 
 	protected Inventory() {
 	}
@@ -32,9 +33,19 @@ public class Inventory {
 	}
 
 	/*Remove the item from inventory (only when completely out of the item)*/
+	/* If item is a rental, save the item to put back into inventory when returned*/
 	public void removeFromInventory(String code)
 	{
+		if(isRental(code)){
+			rented.put(code, stock.get(code));
+		}
 		stock.remove(code);
+	}
+
+	// If rental item is returned, move item back from rented to in stock
+	public void returnToInventory(String code)
+	{
+		stock.put(code, rented.get(code));
 	}
 
 	// Add item to inventory
@@ -82,10 +93,32 @@ public class Inventory {
 		}
 	}
 
+	public void increaseQuantity(String code, double quantity){
+		for (Map.Entry<String, ArrayList<Item>> item : stock.entrySet()) {
+			if (code.equals(item.getKey())) {
+				Item curItem = item.getValue().get(0);
+				curItem.setQty(curItem.getQty() + quantity);
+			}
+		}
+	}
+
 	// Get the available stock
 	public HashMap<String, ArrayList<Item>> getAvailableItems() {
 		return stock;
 	}
+
+	// Check (by code) if item is a rental item
+	public boolean isRental(String code){
+		ArrayList<Item> items = stock.get(code);
+		Item curItem = items.get(0);
+		if(Boolean.TRUE.equals(curItem.getRental())){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+
 	public void addItemList(ArrayList<Item> itm_list)
     {
         Inventory inventory_refill = new Inventory().getInstance();

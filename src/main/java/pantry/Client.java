@@ -111,10 +111,16 @@ public class Client {
     bread.setExpiryDate(LocalDate.of(2020, 05, 01));
     bread.setName("24 Grain Bread");
     bread.setQty(6);
+    Item pan = new Item();
+    pan.setCode("PAN5");
+    pan.setCost(1);
+    pan.setDateReceived(LocalDate.of(2020, 5, 1));
+    pan.setName("Pans");
+    pan.setQty(5);
+    pan.setRental(true);
     
     
     //Test cases for rental items by Nomaan
-    Provider prov = new Provider("Apple", "ORGANIZATION");
     Item laptop = new Item();
     laptop.setCode("LAPTOP1");
     laptop.setCost(1);
@@ -122,19 +128,30 @@ public class Client {
     laptop.setName("Laptop");
     laptop.setQty(1);
     laptop.setRental(true);
+
+    Provider prov = new Provider("Apple", "ORGANIZATION");
     prov.addItem(laptop);
+    prov.addItem(pan);
     Transaction transn = new Transaction(prov.getDonatedSold(), "Purchase", prov);
 
     
     inventory.displayInventory();
 
-    Item r = new Item();
-    r.setQty(1);
-    r.setCode("LAPTOP1");
-    r.setRental(true);
-    r.setExpiryDate(LocalDate.of(2020, 6, 1));
+//    Item r = new Item();
+//    r.setQty(1);
+//    r.setCode("LAPTOP1");
+//    r.setRental(true);
+//    r.setExpiryDate(LocalDate.of(2020, 6, 1));
+//    Student stud = new Student();
+//    stud.addItemToCart(laptop.getCode(),1);
+//    stud.checkoutItems();
+
+    // If item is a rental, use expDate to represent when item needs to be returned
+    laptop.setExpiryDate(LocalDate.of(2020, 6, 1));
+    pan.setExpiryDate(LocalDate.of(2020, 7, 1));
     Student stud = new Student();
-    stud.addItemToCart(r.getCode(),1);
+    stud.addItemToCart(laptop.getCode(),1);
+    stud.addItemToCart(pan.getCode(), 1);
     stud.checkoutItems();
 
     inventory.displayInventory();
@@ -212,6 +229,11 @@ public class Client {
     student6.addItemToCart(carrots.getCode(), 5);
     student6.getCartInfo();
     student6.checkoutItems();
+    inventory.displayInventory();
+
+    // Student returns item that was rented out
+    stud.returnRentedItem(laptop.getCode(),1);
+    stud.returnRentedItem(pan.getCode(), 1);
     inventory.displayInventory();
     
     //Generates reports for Expiration, Items Checked out
