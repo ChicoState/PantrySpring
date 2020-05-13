@@ -17,7 +17,7 @@ public class Checkout {
 	private UUID checkoutId;
 	private LocalDateTime checkoutDate;
 	private HashMap<String, ArrayList<Item>> itemList = new HashMap<>();
-	private HashMap<String, Item> cart = new HashMap<>();
+	private HashMap<String, Double> cart = new HashMap<>();
 	Inventory inv = Inventory.getInstance();
 
 	Checkout() {
@@ -33,14 +33,10 @@ public class Checkout {
 	public void displayCheckoutInfo() {
 		System.out.println("Checkout Id -[" + checkoutId + "]");
 		System.out.println("Date of Checkout -[" + checkoutDate + "]");
-
-		cart.entrySet().forEach(entry->{
-			entry.getValue().displayItem();
-		 });
 	}
 
 	// gets the checked out items from the cart
-	public void getCart(HashMap<String, Item> cart){
+	public void getCart(HashMap<String, Double> cart){
 		this.cart = cart;
 	}
 
@@ -54,15 +50,15 @@ public class Checkout {
 	//  c) Otherwise, remove the amount requested from inventory (item remains in
 	//    inventory, but the quantity has been decreased)
 	public void checkoutAll(){
-		for (Entry<String, Item> itm : cart.entrySet()) {
+		for (Entry<String, Double> itm : cart.entrySet()) {
 			boolean available = inv.itemExists(itm.getKey());
 			if(available){
 				double amount = getAmountInInventory(itm.getKey());
-				if(amount < itm.getValue().getQty()){
+				if(amount < itm.getValue()){
 					System.out.println("Providing amount available (not total requested)");
 					inv.removeFromInventory(itm.getKey());
 				}
-				else if(amount == itm.getValue().getQty()){
+				else if(amount == itm.getValue()){
 					System.out.println("We have just the right amount!");
 					inv.removeFromInventory(itm.getKey());
 				}
@@ -103,7 +99,7 @@ public class Checkout {
 	//      soonest exp date, remove the item at the current index, determine how
 	//      much additional quantity is needed, and continue going through the
 	//      list until the order has been fulfilled
-	public void checkoutItem(String code, Item itm){
+	public void checkoutItem(String code, Double qty){
 		itemList = inv.getAvailableItems();
 		ArrayList<Item> items = itemList.get(code);
 		items.sort(new expirySorter());
@@ -112,17 +108,17 @@ public class Checkout {
 		while(!fulfilled){
 			Item curItem = items.get(index);
 			double curQty = curItem.getQty();
-			if(curQty > itm.getQty()){
+			if(curQty > qty){
 				System.out.println("Reducing quantity");
-				inv.reduceQuantity(code, itm.getQty());
+				inv.reduceQuantity(code, qty);
 				fulfilled = true;
 			}
-			else if(curQty == itm.getQty()){
+			else if(curQty == qty){
 				items.remove(index);
 				fulfilled = true;
 			}
 			else{
-				itm.setQty(itm.getQty() - curQty); 
+				qty = qty - curQty;
 				items.remove(index);
 			}
 		}
