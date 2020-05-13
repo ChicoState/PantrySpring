@@ -18,6 +18,7 @@ public class Checkout {
 	private HashMap<String, ArrayList<Item>> itemList = new HashMap<>();
 	private HashMap<String, Double> cart = new HashMap<>();
 	Inventory inv = Inventory.getInstance();
+	TransactionHistory th = TransactionHistory.getInstance();
 
 	Checkout() {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
@@ -52,9 +53,13 @@ public class Checkout {
 		for (Entry<String, Double> itm : cart.entrySet()) {
 			boolean available = inv.itemExists(itm.getKey());
 			if (available) {
+				itemList = inv.getAvailableItems();
+				ArrayList<Item> items = itemList.get(itm.getKey());
+				Item curItem = items.get(0);
 				double amount = getAmountInInventory(itm.getKey());
 				if (amount < itm.getValue()) {
 					System.out.println("Providing amount available (not total requested)");
+					cart.put(itm.getKey(), amount);
 					inv.removeFromInventory(itm.getKey());
 				} else if (amount == itm.getValue()) {
 					System.out.println("We have just the right amount!");
@@ -63,6 +68,15 @@ public class Checkout {
 					System.out.println("Checking out item, removing from inventory");
 					checkoutItem(itm.getKey(), itm.getValue());
 				}
+				// If item is PLU, add qty to total checked out weight
+				// Else, add qty to total checkout out count
+				if(curItem.isPLU()){
+					th.addCheckoutWeight(itm.getValue());
+				}
+				else{
+					th.addCheckoutCount(itm.getValue());
+				}
+
 			} else {
 				System.out.println("Sorry, item is not available");
 			}
