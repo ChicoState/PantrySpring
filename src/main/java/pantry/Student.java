@@ -41,7 +41,7 @@ public class Student {
 		for (Entry<String, Double> itm : cart.entrySet()) {
 			System.out.println("\t" + count + ".");
 			System.out.println("\tItem code: " + itm.getKey());
-			System.out.println("\tItem quantity: " + itm.getValue().getQty());
+			System.out.println("\tItem quantity: " + itm.getValue());
 			count++;
 		}
 		return cart;
