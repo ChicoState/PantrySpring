@@ -19,13 +19,13 @@ import java.text.DecimalFormat;
 
 public class Transaction {
     //Transaction Number
-    private final UUID transactionId;
+    private  UUID transactionId;
 
     //Purchase, Donation, Supply
-    private final String transactionType;
+    private  String transactionType;
 
     //Transaction with
-    private final Provider provider;
+    private  Provider provider;
 
     //Items in transaction
     private HashMap<String, ArrayList<Item>> itemList;
@@ -34,7 +34,7 @@ public class Transaction {
 
     // Total Cost
     private double totalCost;
-
+    
     // Constructor{ Item_list, Transaction_Type:Purchase, Donated, Sold, Provider}
     public Transaction(HashMap<String, ArrayList<Item>> list, String transType, Provider p) {
         transactionId = UUID.randomUUID();
@@ -48,7 +48,8 @@ public class Transaction {
         //Update qty in the inventory
         commitTransaction(itemList);
     }
-
+    public Transaction()
+    {}
     /*Displays contents of the transaction and the total cost*/
     public void displayTransaction()
     {
@@ -80,6 +81,7 @@ public class Transaction {
     Add new record in TransactionHistory*/
     public void commitTransaction(HashMap<String, ArrayList<Item>> itemList1)
     {
+        TransactionHistory store = new TransactionHistory().getInstance();
         Inventory inv = Inventory.getInstance();
         if(transactionType.equals("Purchase"))
         {
@@ -88,10 +90,14 @@ public class Transaction {
                 for(Item itm : itemL.getValue())
                 {
                     inv.addToInventory(itm);
+                    if(itm.isPLU()==true)
+                        store.addPurchaseWeight(itm.getQty());
+                    else
+                        store.addCheckoutCount(itm.getQty());
+
                 }   
             }
         }
-        TransactionHistory store = new TransactionHistory().getInstance();
         store.storeTransaction(transactionId, this);
     }
 
