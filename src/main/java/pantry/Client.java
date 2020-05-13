@@ -111,10 +111,16 @@ public class Client {
     bread.setExpiryDate(LocalDate.of(2020, 05, 01));
     bread.setName("24 Grain Bread");
     bread.setQty(6);
+    Item pan = new Item();
+    pan.setCode("PAN5");
+    pan.setCost(1);
+    pan.setDateReceived(LocalDate.of(2020, 5, 1));
+    pan.setName("Pans");
+    pan.setQty(5);
+    pan.setRental(true);
     
     
     //Test cases for rental items by Nomaan
-    Provider prov = new Provider("Apple", "ORGANIZATION");
     Item laptop = new Item();
     laptop.setCode("LAPTOP1");
     laptop.setCost(1);
@@ -122,19 +128,30 @@ public class Client {
     laptop.setName("Laptop");
     laptop.setQty(1);
     laptop.setRental(true);
+
+    Provider prov = new Provider("Apple", "ORGANIZATION");
     prov.addItem(laptop);
+    prov.addItem(pan);
     Transaction transn = new Transaction(prov.getDonatedSold(), "Purchase", prov);
 
     
     inventory.displayInventory();
 
-    Item r = new Item();
-    r.setQty(1);
-    r.setCode("LAPTOP1");
-    r.setRental(true);
-    r.setExpiryDate(LocalDate.of(2020, 6, 1));
+//    Item r = new Item();
+//    r.setQty(1);
+//    r.setCode("LAPTOP1");
+//    r.setRental(true);
+//    r.setExpiryDate(LocalDate.of(2020, 6, 1));
+//    Student stud = new Student();
+//    stud.addItemToCart(laptop.getCode(),1);
+//    stud.checkoutItems();
+
+    // If item is a rental, use expDate to represent when item needs to be returned
+    laptop.setExpiryDate(LocalDate.of(2020, 6, 1));
+    pan.setExpiryDate(LocalDate.of(2020, 7, 1));
     Student stud = new Student();
-    stud.addItemToCart(r.getCode(),r);
+    stud.addItemToCart(laptop.getCode(),1);
+    stud.addItemToCart(pan.getCode(), 1);
     stud.checkoutItems();
 
     inventory.displayInventory();
@@ -176,59 +193,51 @@ public class Client {
     // Test the checkout with various student scenarios
     // Multiple item checkout (items exist, in enough quantity)
     Student student1 = new Student();
-    student1.getStudentId();
-    apple1.setQty(2);
-    student1.addItemToCart(apple1.getCode(), apple1);
-    carrots.setQty(1);
-    student1.addItemToCart(carrots.getCode(), carrots);
+    student1.addItemToCart(apple1.getCode(), 2);
+    student1.addItemToCart(carrots.getCode(), 1);
     student1.getCartInfo();
     student1.checkoutItems();
     inventory.displayInventory();
     // Checkout from inventory (subtract from same item as previous checkout)
     Student student2 = new Student();
-    student2.getStudentId();
-    carrots.setQty(3.5);
-    student2.addItemToCart(carrots.getCode(),carrots);
+    student2.addItemToCart(carrots.getCode(),3.5);
     student2.getCartInfo();
     student2.checkoutItems();
     inventory.displayInventory();
     // Checkout quantity partly taken from 1st item in list, partly from 2nd item in list
     Student student3 = new Student();
-    student3.getStudentId();
-    student3.getStudentId();
-    carrots.setQty(3);
-    student3.addItemToCart(carrots.getCode(), carrots);
+    student3.addItemToCart(carrots.getCode(), 3);
     student3.getCartInfo();
     student3.checkoutItems();
     inventory.displayInventory();
     // Total quantity not available, but student checks out what is available
     // At this point, the inventory is out of this item
     Student student4 = new Student();
-    student4.getStudentId();
-    carrots.setQty(4.25);
-    student4.addItemToCart(carrots.getCode(), carrots);
+    student4.addItemToCart(carrots.getCode(), 4.25);
     student4.getCartInfo();
     student4.checkoutItems();
     inventory.displayInventory();
     // Check that items are sorted so student receives item that expires first
     // (regardless of when the item was donated/sold to the food pantry)
     Student student5 = new Student();
-    student5.getStudentId();
-    //student5.addItemToCart(ab.getCode(), 9);
+    student5.addItemToCart(ab.getCode(), 9);
     student5.getCartInfo();
     student5.checkoutItems();
     inventory.displayInventory();
      //Student tries to checkout item that the inventory is out of
     Student student6 = new Student();
-    student6.getStudentId();
-    carrots.setQty(5);
-    student6.addItemToCart(carrots.getCode(), carrots);
+    student6.addItemToCart(carrots.getCode(), 5);
     student6.getCartInfo();
     student6.checkoutItems();
     carrots.setQty(1);
     student6.addItemToCart(carrots.getCode(),carrots);
     student6.getCartInfo();
     student6.checkoutItems();
+    inventory.displayInventory();
+
+    // Student returns item that was rented out
+    stud.returnRentedItem(laptop.getCode(),1);
+    stud.returnRentedItem(pan.getCode(), 1);
     inventory.displayInventory();
     
     //Generates reports for Expiration, Items Checked out

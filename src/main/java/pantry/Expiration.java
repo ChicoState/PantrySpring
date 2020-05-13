@@ -21,9 +21,11 @@ public class Expiration {
 		int count = 0;
 		for (Map.Entry<String, ArrayList<Item>> entry : exp.entrySet()) {
 			for (Item itm : entry.getValue()) {
-				if (itm.getExpDate().isBefore(LocalDate.now())) {
-					ExpiredItems.add(itm);
-					count++;
+				if(!itm.getRental()){
+					if (itm.getExpDate().isBefore(LocalDate.now())) {
+						ExpiredItems.add(itm);
+						count++;
+					}
 				}
 			}
 		}
@@ -38,8 +40,10 @@ public class Expiration {
 
 		for (Map.Entry<String, ArrayList<Item>> entry : expired.entrySet()) {
 			for (Item itm : entry.getValue()) {
-				if (itm.daysUntilExp() <= 2) {
-					ExpiringItems.add(itm);
+				if(!itm.getRental()) {
+					if (itm.daysUntilExp() <= 2) {
+						ExpiringItems.add(itm);
+					}
 				}
 			}
 		}

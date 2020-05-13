@@ -14,8 +14,9 @@ public class Student {
 	private final UUID studentId;
 	private static Student student = null;
 	ArrayList<Checkout> transactionHistory = new ArrayList<>();
-	private HashMap<String, Item> cart = new HashMap<>();
+	private HashMap<String, Double> cart = new HashMap<>();
 	ArrayList<UUID> studentT=new ArrayList<>();
+
 	// generates random 9 digit student id
 	Student() {
 		//studentId = (long) Math.floor(Math.random() * 9_000_000_0L) + 1_000_000_0L;
@@ -35,9 +36,9 @@ public class Student {
 	}
 
 	// Get info about all items in the student's cart
-	public HashMap<String, Item> getCartInfo(){
+	public HashMap<String, Double> getCartInfo(){
 		int count = 1;
-		for (Entry<String, Item> itm : cart.entrySet()) {
+		for (Entry<String, Double> itm : cart.entrySet()) {
 			System.out.println("\t" + count + ".");
 			System.out.println("\tItem code: " + itm.getKey());
 			System.out.println("\tItem quantity: " + itm.getValue().getQty());
@@ -56,8 +57,14 @@ public class Student {
 	}
 
 	// add item with given code and qty to the student's cart
-	public void addItemToCart(String code, Item itm){
-		cart.put(code, itm);
+	public void addItemToCart(String code, double qty){
+		cart.put(code, qty);
+	}
+
+	// return rented item
+	public void returnRentedItem(String code, double qty){
+		Checkout co = new Checkout();
+		co.returnItem(code, qty);
 	}
 
 	/*Display complete Checkout History*/
