@@ -49,12 +49,18 @@ public class Checkout {
 	//  c) Otherwise, remove the amount requested from inventory (item remains in
 	//    inventory, but the quantity has been decreased)
 	public void checkoutAll() {
+		TransactionHistory th = TransactionHistory.getInstance();
 		for (Entry<String, Double> itm : cart.entrySet()) {
 			boolean available = inv.itemExists(itm.getKey());
 			if (available) {
+				itemList = inv.getAvailableItems();
+				ArrayList<Item> items = itemList.get(itm.getKey());
+				Item curItem = items.get(0);
+
 				double amount = getAmountInInventory(itm.getKey());
 				if (amount < itm.getValue()) {
 					System.out.println("Providing amount available (not total requested)");
+					cart.put(itm.getKey(), amount);
 					inv.removeFromInventory(itm.getKey());
 				} else if (amount == itm.getValue()) {
 					System.out.println("We have just the right amount!");
@@ -63,10 +69,23 @@ public class Checkout {
 					System.out.println("Checking out item, removing from inventory");
 					checkoutItem(itm.getKey(), itm.getValue());
 				}
+
+				// If item is PLU, add qty to total checked out weight
+				// Else, add qty to total checkout out count
+				if(Boolean.TRUE.equals(curItem.isPLU())){
+					th.addCheckoutWeight(itm.getValue());
+					System.out.println("PLU count: " + itm.getValue());
+				}
+				else{
+					th.addCheckoutCount(itm.getValue());
+					System.out.println("UPC weight: " + itm.getValue());
+				}
 			} else {
 				System.out.println("Sorry, item is not available");
 			}
 		}
+//		System.out.println("UPC total item count: " + th.getCheckoutCount());
+//		System.out.println("PLU total item weight: " + th.getCheckoutWeight());
 	}
 
 	// Determine the amount of the item available in inventory
