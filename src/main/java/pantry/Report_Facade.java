@@ -18,7 +18,6 @@ public class Report_Facade {
 		for(Item itm: expiredItems)
 		{
 			System.out.printf("%20s %25s %20s %25s %10s%n", itm.getCode(), "|", itm.getName(), "|",itm.getExpDate());
-
 		}
 
 		System.out.println();
@@ -29,7 +28,6 @@ public class Report_Facade {
 		for(Item itm: expiringItems)
 		{
 			System.out.printf("%20s %25s %20s %25s %10s%n", itm.getCode(), "|", itm.getName(), "|",itm.getExpDate());
-
 		}
 
 		TransactionHistory th = TransactionHistory.getInstance();
@@ -39,9 +37,12 @@ public class Report_Facade {
 		System.out.println("Total weight of weighted goods: " + th.getPurchaseWeight());
 		System.out.println("\nTotal Amount of Food Distributed to Students: ");
 		System.out.println("Number of packaged items: " + th.getCheckoutCount());
-		System.out.println("Total weight of weighted goods: " + th.getCheckoutWeight());
+		System.out.println("Total weight of weighted goods: " + th.getCheckoutWeight() + "\n");
 
+		PatronHistory p = new PatronHistory().getInstance();
+		System.out.println("************************************************|Patron History|*********************************************");
+		System.out.println("\nTotal number of Students who checked out food - "+p.getNumPatrons());
+		System.out.println("\nTotal number of Checkouts - " +p.getNumCheckouts() + "\n");
 		System.out.println("**********************************************| End Report |**********************************************");
-
 	}
 }
