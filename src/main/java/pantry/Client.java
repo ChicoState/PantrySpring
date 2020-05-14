@@ -240,14 +240,7 @@ public class Client {
     inventory.displayInventory();
     
     //Generates reports for Expiration, Items Checked out
-    Report_Facade report=new Report_Facade();
+    Report_Facade report = new Report_Facade();
     report.getReport();
-PatronHistory p=new PatronHistory().getInstance();
-     System.out.println();	
-	 System.out.println("************************************************|Patron History|*********************************************");
-	 System.out.println();
-	 System.out.println("Total number of Students who checked out food - "+p.getNumPatrons());
-	 System.out.println();
-	 System.out.println("Total number of Checkouts - " +p.getNumCheckouts());
   }
 }

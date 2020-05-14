@@ -10,18 +10,13 @@ import java.util.UUID;
 *****************Student**************/
 public class Student {
 	
-	//private final long studentId;
 	private final UUID studentId;
-	private static Student student = null;
 	ArrayList<Checkout> transactionHistory = new ArrayList<>();
-	private HashMap<String, Double> cart = new HashMap<>();
-	ArrayList<UUID> studentT=new ArrayList<>();
+	private final HashMap<String, Double> cart = new HashMap<>();
 
-	// generates random 9 digit student id
+	// generates random student id
 	Student() {
-		//studentId = (long) Math.floor(Math.random() * 9_000_000_0L) + 1_000_000_0L;
 		studentId = UUID.randomUUID();
-		//System.out.println("studentId :[" + studentId + "]");
 	}
 	
 	/*Returns Student ID*/
@@ -29,7 +24,6 @@ public class Student {
 		System.out.println("studentId :[" + studentId + "]");
 		return studentId;
 	}
-
 	
 	/* Returns checkout history of student */
 	public ArrayList<Checkout> getTransactionHistory() {

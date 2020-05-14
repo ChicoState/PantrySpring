@@ -121,7 +121,7 @@ public class Inventory {
 
 	public void addItemList(ArrayList<Item> itm_list)
     {
-        Inventory inventory_refill = new Inventory().getInstance();
+        Inventory inventory_refill = Inventory.getInstance();
         for(Item itm1 : itm_list)
         {
             inventory_refill.addToInventory(itm1);

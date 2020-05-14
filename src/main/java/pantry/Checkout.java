@@ -13,22 +13,16 @@ import java.util.Map.Entry;
 *****************Checkout**************/
 public class Checkout {
 
-	private UUID checkoutId;
-	private LocalDateTime checkoutDate;
+	private final UUID checkoutId;
+	private final LocalDateTime checkoutDate;
 	private HashMap<String, ArrayList<Item>> itemList = new HashMap<>();
 	private HashMap<String, Double> cart = new HashMap<>();
 	Inventory inv = Inventory.getInstance();
 
 	Checkout() {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-		//this.checkoutId = UUID.randomUUID();
+		this.checkoutId = UUID.randomUUID();
 		this.checkoutDate = LocalDateTime.now();
-	}
-
-	public void setCheckoutId()
-	{
-		checkoutId=UUID.randomUUID();
-	
 	}
 
 	public UUID getCheckoutId() {
