@@ -90,7 +90,7 @@ public class Transaction {
                 for(Item itm : itemL.getValue())
                 {
                     inv.addToInventory(itm);
-                    if(itm.isPLU()==true)
+                    if(itm.isPLU())
                         store.addPurchaseWeight(itm.getQty());
                     else
                         store.addPurchaseCount(itm.getQty());

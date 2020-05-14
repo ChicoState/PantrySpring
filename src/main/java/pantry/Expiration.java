@@ -8,8 +8,8 @@ import java.util.Map;
 
 public class Expiration {
 
-	private ArrayList<Item> ExpiredItems = new ArrayList<>();
-	private ArrayList<Item> ExpiringItems = new ArrayList<>();
+	private final ArrayList<Item> ExpiredItems = new ArrayList<>();
+	private final ArrayList<Item> ExpiringItems = new ArrayList<>();
 	Inventory inv = Inventory.getInstance();
 
 	// Returns Expired Items
