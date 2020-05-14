@@ -11,7 +11,9 @@ public class PatronHistory {
 	private static PatronHistory patronHistory = null;
 	protected PatronHistory() {
     }
-	private Map<UUID, Integer> myMap = new HashMap<UUID, Integer>();
+	
+	//HashMap that stored checkedout Ids
+	private Map<UUID, Integer> checkedOut = new HashMap<UUID, Integer>();
 	int count=0;
 	
     public PatronHistory getInstance()
@@ -22,19 +24,22 @@ public class PatronHistory {
         return patronHistory;  
     }
     
+    //Adds Items checked out to the Map
     public void addCheckout(UUID studentId)
     {
-    	myMap.put(studentId,1);
+    	checkedOut.put(studentId,1);
     	count++;
     }
    
+   //Returns total Number of Patrons
    public int getNumPatrons()
 	{	   
 	   
-	   return myMap.size();
+	   return checkedOut.size();
    
 	}
    
+   //Returns total number Number of checkouts
    public int getNumCheckouts()
   	{
   	   return count;
