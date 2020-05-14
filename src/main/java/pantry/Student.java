@@ -50,6 +50,7 @@ public class Student {
 
 	// Create a new checkout, get student's complete cart, and checkout
 	// everything. Then add the checkout to the transaction history
+	//takes student Id so that can generate reports
 	public void checkoutItems( UUID studentId){
 		Checkout co = new Checkout();
 		co.getCart(cart);

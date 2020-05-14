@@ -56,6 +56,7 @@ public class Checkout {
 	//    inventory, but the quantity has been decreased)
 	public void checkoutAll(UUID studentId) {
 
+		//Adds report of checked out Ids / student ids to patron History
 		PatronHistory p=new PatronHistory().getInstance();
 		p.addCheckout(studentId);
 
