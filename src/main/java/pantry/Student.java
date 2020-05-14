@@ -23,6 +23,7 @@ public class Student {
 		studentId = UUID.randomUUID();
 		//System.out.println("studentId :[" + studentId + "]");
 	}
+	
 	/*Returns Student ID*/
 	public UUID getStudentId(){
 		System.out.println("studentId :[" + studentId + "]");
@@ -49,10 +50,10 @@ public class Student {
 
 	// Create a new checkout, get student's complete cart, and checkout
 	// everything. Then add the checkout to the transaction history
-	public void checkoutItems(){
+	public void checkoutItems( UUID studentId){
 		Checkout co = new Checkout();
 		co.getCart(cart);
-		co.checkoutAll();
+		co.checkoutAll(studentId);
 		transactionHistory.add(co);
 	}
 

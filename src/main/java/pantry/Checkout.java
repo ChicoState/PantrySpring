@@ -21,8 +21,14 @@ public class Checkout {
 
 	Checkout() {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-		this.checkoutId = UUID.randomUUID();
+		//this.checkoutId = UUID.randomUUID();
 		this.checkoutDate = LocalDateTime.now();
+	}
+
+	public void setCheckoutId()
+	{
+		checkoutId=UUID.randomUUID();
+	
 	}
 
 	public UUID getCheckoutId() {
@@ -48,7 +54,11 @@ public class Checkout {
 	//    from inventory.
 	//  c) Otherwise, remove the amount requested from inventory (item remains in
 	//    inventory, but the quantity has been decreased)
-	public void checkoutAll() {
+	public void checkoutAll(UUID studentId) {
+
+		PatronHistory p=new PatronHistory().getInstance();
+		p.addCheckout(studentId);
+
 		TransactionHistory th = TransactionHistory.getInstance();
 		for (Entry<String, Double> itm : cart.entrySet()) {
 			boolean available = inv.itemExists(itm.getKey());

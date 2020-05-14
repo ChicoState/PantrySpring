@@ -152,7 +152,7 @@ public class Client {
     Student stud = new Student();
     stud.addItemToCart(laptop.getCode(),1);
     stud.addItemToCart(pan.getCode(), 1);
-    stud.checkoutItems();
+    stud.checkoutItems(stud.getStudentId());
 
     inventory.displayInventory();
 
@@ -196,42 +196,42 @@ public class Client {
     student1.addItemToCart(apple1.getCode(), 2);
     student1.addItemToCart(carrots.getCode(), 1);
     student1.getCartInfo();
-    student1.checkoutItems();
+    student1.checkoutItems(student1.getStudentId());
     inventory.displayInventory();
     // Checkout from inventory (subtract from same item as previous checkout)
     Student student2 = new Student();
     student2.addItemToCart(carrots.getCode(),3.5);
     student2.getCartInfo();
-    student2.checkoutItems();
+    student2.checkoutItems(student2.getStudentId());
     inventory.displayInventory();
     // Checkout quantity partly taken from 1st item in list, partly from 2nd item in list
     Student student3 = new Student();
     student3.addItemToCart(carrots.getCode(), 3);
     student3.getCartInfo();
-    student3.checkoutItems();
+    student3.checkoutItems(student3.getStudentId());
     inventory.displayInventory();
     // Total quantity not available, but student checks out what is available
     // At this point, the inventory is out of this item
     Student student4 = new Student();
     student4.addItemToCart(carrots.getCode(), 4.25);
     student4.getCartInfo();
-    student4.checkoutItems();
+    student4.checkoutItems(student4.getStudentId());
     inventory.displayInventory();
     // Check that items are sorted so student receives item that expires first
     // (regardless of when the item was donated/sold to the food pantry)
     Student student5 = new Student();
     student5.addItemToCart(ab.getCode(), 9);
     student5.getCartInfo();
-    student5.checkoutItems();
+    student5.checkoutItems(student5.getStudentId());
     inventory.displayInventory();
      //Student tries to checkout item that the inventory is out of
     Student student6 = new Student();
     student6.addItemToCart(carrots.getCode(), 5);
     student6.getCartInfo();
-    student6.checkoutItems();
+    student6.checkoutItems(student6.getStudentId());
     student6.addItemToCart(carrots.getCode(),1);
     student6.getCartInfo();
-    student6.checkoutItems();
+    student6.checkoutItems(student6.getStudentId());
     inventory.displayInventory();
 
     // Student returns item that was rented out
@@ -242,5 +242,12 @@ public class Client {
     //Generates reports for Expiration, Items Checked out
     Report_Facade report=new Report_Facade();
     report.getReport();
+PatronHistory p=new PatronHistory().getInstance();
+     System.out.println();	
+	 System.out.println("************************************************|Patron History|*********************************************");
+	 System.out.println();
+	 System.out.println("Total number of Students who checked out food - "+p.getNumPatrons());
+	 System.out.println();
+	 System.out.println("Total number of Checkouts - " +p.getNumCheckouts());
   }
 }
